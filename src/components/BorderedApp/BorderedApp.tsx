@@ -20,6 +20,7 @@ import {
   StyledWindowButtonsWrapper,
   StyledWindowMenus,
   StyledWindowMenusWrapper,
+  StyledContentInner,
 } from "./styles";
 
 interface BorderedAppProps extends BaseProps {
@@ -126,7 +127,11 @@ function BorderedApp({
           </StyledWindowButtons>
         </StyledWindowButtonsWrapper>
       </StyledTitleBar>
-      <StyledContent>{children}</StyledContent>
+      <StyledContent className="bordered-app__content">
+        <StyledContentInner className="bordered-app__content-inner">
+          {children}
+        </StyledContentInner>
+      </StyledContent>
       <StyledCorner location="sw" ref={resizeHandleSW} />
       <StyledEdge location="s" ref={resizeHandleS} />
       <StyledCorner location="se" ref={resizeHandleSE} />

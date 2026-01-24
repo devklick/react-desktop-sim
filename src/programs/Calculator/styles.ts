@@ -9,7 +9,6 @@ export const StyledCalc = styled.div`
     "input"
     "output"
     "buttons";
-  box-shadow: 0px 0px 4px rgb(0, 0, 0, 0.5) inset;
   padding: 10px;
   border-radius: 10px;
   box-sizing: border-box;

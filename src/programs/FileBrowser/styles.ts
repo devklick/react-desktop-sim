@@ -10,8 +10,6 @@ export const StyledFileBrowser = styled.div`
     "top-bar top-bar"
     "side-bar main-content"
     "side-bar bottom-bar";
-
-  box-shadow: 0px 0px 4px rgb(0, 0, 0, 0.5) inset;
   border-radius: 10px;
 `;
 

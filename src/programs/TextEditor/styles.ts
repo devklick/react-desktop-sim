@@ -14,7 +14,6 @@ export const StyledTextArea = styled.textarea<{ selectedColor: string }>`
   padding: 0;
   background-color: transparent;
   color: white;
-  box-shadow: 0px 0px 4px rgb(0, 0, 0, 0.5) inset;
   border-radius: 10px;
   padding: 10px;
   box-sizing: border-box;

@@ -7,8 +7,11 @@ interface TextEditorProps {}
 function TextEditor({}: TextEditorProps) {
   const settings = useSystemSettings();
   return (
-    <StyledTextEditor>
-      <StyledTextArea selectedColor={settings.accentColor} />
+    <StyledTextEditor className="text-editor">
+      <StyledTextArea
+        selectedColor={settings.accentColor}
+        className="text-editor__content"
+      />
     </StyledTextEditor>
   );
 }

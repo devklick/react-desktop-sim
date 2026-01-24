@@ -19,7 +19,9 @@ export const StyledBorderedApp = styled.div<StyledBorderedAppProps>`
     "title-bar"
     "content";
   border-radius: 10px;
-  box-shadow: 0px -2px 10px 1px rgb(0, 0, 0, 0.5);
+  box-shadow:
+    0px -2px 10px 1px rgb(0, 0, 0, 0.4),
+    0 -0.5px 1px #8d8d8d inset;
   position: fixed;
   width: ${(props) => props.initialDimensions.width}px;
   height: ${(props) => props.initialDimensions.height}px;
@@ -141,10 +143,20 @@ export const StyledWindowButton = styled.button<{
 
 export const StyledContent = styled.div`
   grid-area: content;
-  padding: 5px;
-  padding-top: 0;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
   min-height: 0;
+  padding: 5px;
+  padding-top: 0;
+`;
+
+export const StyledContentInner = styled.div`
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 0px 4px rgb(0, 0, 0, 0.5) inset;
+  overflow: hidden;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 5px;
 `;

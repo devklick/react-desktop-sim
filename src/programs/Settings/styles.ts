@@ -6,7 +6,6 @@ export const StyledSettings = styled.div`
   grid-template-areas: "side-bar main-content";
   width: 100%;
   height: 100%;
-  box-shadow: 0px 0px 4px rgb(0, 0, 0, 0.5) inset;
   border-radius: 10px;
 `;
 
