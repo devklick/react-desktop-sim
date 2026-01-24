@@ -20,18 +20,20 @@ export interface Position {
 type MouseMovementHandler = (
   initialRect: Partial<Rect>,
   mouseDownPosition: Position,
-  mouseMoveEvent: MouseEvent
+  mouseMoveEvent: MouseEvent,
 ) => number;
 
 interface UseDragToResizeProps {
   elementRef: React.RefObject<HTMLElement>;
   elementRect: MutableRefObject<Partial<Rect>>;
   minDimensions: Dimensions;
+  maxDimensions?: Dimensions;
 }
 
 function useDragToResize({
   elementRef,
   minDimensions,
+  maxDimensions,
   elementRect,
 }: UseDragToResizeProps) {
   const resizeHandleN = useRef<HTMLDivElement>(null);
@@ -86,7 +88,11 @@ function useDragToResize({
         const newLeft =
           leftFn?.(initialRect, startPos, mouseMoveEvent) ?? initialRect.left;
 
-        if (newWidth >= minDimensions.width) {
+        if (
+          newWidth >= minDimensions.width &&
+          (!maxDimensions || newWidth <= maxDimensions.width)
+        ) {
+          console.log("maxwidth", maxDimensions?.width, "new width", newWidth);
           elementRect.current.width = newWidth;
           elementRef.current.style.width = `${elementRect.current.width}px`;
           elementRect.current.left = newLeft;
@@ -101,7 +107,10 @@ function useDragToResize({
         const newTop =
           topFn?.(initialRect, startPos, mouseMoveEvent) ?? initialRect.top;
 
-        if (newHeight >= minDimensions.height) {
+        if (
+          newHeight >= minDimensions.height &&
+          (!maxDimensions || newHeight <= maxDimensions.height)
+        ) {
           elementRect.current.height = newHeight;
           elementRef.current.style.height = `${elementRect.current.height}px`;
           elementRect.current.top = newTop;
@@ -122,37 +131,37 @@ function useDragToResize({
     const nHeightFn: MouseMovementHandler = (
       initialRect,
       mouseDownPosition,
-      mouseMoveEvent
+      mouseMoveEvent,
     ) => (initialRect.height ?? 0) + mouseDownPosition.y - mouseMoveEvent.pageY;
 
     const nTopFn: MouseMovementHandler = (
       initialRect,
       mouseDownPosition,
-      mouseMoveEvent
+      mouseMoveEvent,
     ) => (initialRect.top ?? 0) - mouseDownPosition.y + mouseMoveEvent.pageY;
 
     const eWidthFn: MouseMovementHandler = (
       initialRect,
       mouseDownPosition,
-      mouseMoveEvent
+      mouseMoveEvent,
     ) => (initialRect.width ?? 0) - mouseDownPosition.x + mouseMoveEvent.pageX;
 
     const sHeightFn: MouseMovementHandler = (
       initialRect,
       mouseDownPosition,
-      mouseMoveEvent
+      mouseMoveEvent,
     ) => (initialRect.height ?? 0) - mouseDownPosition.y + mouseMoveEvent.pageY;
 
     const wWidthFn: MouseMovementHandler = (
       initialRect,
       mouseDownPosition,
-      mouseMoveEvent
+      mouseMoveEvent,
     ) => (initialRect.width ?? 0) + mouseDownPosition.x - mouseMoveEvent.pageX;
 
     const wLeftFn: MouseMovementHandler = (
       initialRect,
       mouseDownPosition,
-      mouseMoveEvent
+      mouseMoveEvent,
     ) => (initialRect.left ?? 0) - mouseDownPosition.x + mouseMoveEvent.pageX;
     //#endregion
 
@@ -242,19 +251,19 @@ function useDragToResize({
       _resizeWRef?.current?.removeEventListener("mousedown", handleMouseDownW);
       _resizeNERef?.current?.removeEventListener(
         "mousedown",
-        handleMouseDownNE
+        handleMouseDownNE,
       );
       _resizeSERef?.current?.removeEventListener(
         "mousedown",
-        handleMouseDownSE
+        handleMouseDownSE,
       );
       _resizeSWRef?.current?.removeEventListener(
         "mousedown",
-        handleMouseDownSW
+        handleMouseDownSW,
       );
       _resizeNWRef?.current?.removeEventListener(
         "mousedown",
-        handleMouseDownNW
+        handleMouseDownNW,
       );
     };
     //#endregion

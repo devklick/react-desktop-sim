@@ -42,6 +42,7 @@ function BorderedApp({
   initialDimensions,
   initialPosition,
   minDimensions = { height: 350, width: 350 },
+  maxDimensions,
   menus,
   zIndex,
   hidden,
@@ -67,6 +68,7 @@ function BorderedApp({
   } = usePositionableElement({
     elementRef: appRef,
     minDimensions,
+    maxDimensions,
     initialPosition,
     windowType: type,
     windowId: id,

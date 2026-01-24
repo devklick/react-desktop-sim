@@ -14,6 +14,8 @@ interface LauncherProps {
   WindowTitle: string;
   windowId?: string;
   initialDimensions: Dimensions;
+  minDimensions?: Dimensions;
+  maxDimensions?: Dimensions;
   menus?: Array<MenuItemProps>;
   appContent: JSX.Element;
   icon: string;
@@ -24,6 +26,8 @@ function Launcher({
   windowId,
   WindowTitle,
   initialDimensions,
+  minDimensions,
+  maxDimensions,
   menus,
   appContent,
   icon,
@@ -51,6 +55,8 @@ function Launcher({
         title: WindowTitle,
         type: windowType,
         initialDimensions,
+        minDimensions,
+        maxDimensions,
         initialPosition: {
           x: getInitialPosition("x"),
           y: getInitialPosition("y"),

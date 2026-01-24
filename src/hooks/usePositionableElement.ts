@@ -6,6 +6,7 @@ import useWindowMinMax from "./useWindowMinMax";
 interface UsePositionableElementProps {
   elementRef: React.RefObject<HTMLElement>;
   minDimensions: Dimensions;
+  maxDimensions?: Dimensions;
   windowType: string;
   windowId: string;
   initialPosition: Position;
@@ -20,6 +21,7 @@ interface UsePositionableElementProps {
 function usePositionableElement({
   elementRef,
   minDimensions,
+  maxDimensions,
   windowType,
   windowId,
   initialPosition,
@@ -56,6 +58,7 @@ function usePositionableElement({
     elementRef,
     elementRect,
     minDimensions,
+    maxDimensions,
   });
 
   // The move hook allows the app to be moved when
@@ -71,6 +74,7 @@ function usePositionableElement({
   const { maximize, minimize } = useWindowMinMax({
     windowRef: elementRef,
     windowRect: elementRect,
+    maxDimensions,
     windowType,
     windowId,
   });
