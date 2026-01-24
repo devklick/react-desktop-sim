@@ -12,9 +12,9 @@ function CalculatorLauncher({}: CalculatorLauncherProps) {
       windowType={windowType}
       WindowTitle="Calculator"
       // TODO: Consider supoprting an `allowResize` prop, instead of having to repeat the initial dimensions for both min and max
-      initialDimensions={{ height: 400, width: 400 }}
-      maxDimensions={{ height: 400, width: 400 }}
-      minDimensions={{ height: 400, width: 400 }}
+      initialDimensions={{ height: 400, width: 250 }}
+      maxDimensions={{ height: 400, width: 250 }}
+      minDimensions={{ height: 400, width: 250 }}
       icon=""
       menus={[]}
       appContent={<Calculator />}
