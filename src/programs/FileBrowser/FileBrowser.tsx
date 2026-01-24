@@ -12,6 +12,7 @@ import {
   StyledTopBarButtons,
   StyledTopBarPath,
 } from "./styles";
+import useSystemSettings from "../../stores/systemSettingsStore";
 
 const defaultPath = "/home/user";
 
@@ -33,6 +34,10 @@ function TopBar({
   navForward,
   navBack,
 }: TopBarProps) {
+  const [backgroundColor, fontColor] = useSystemSettings((s) => [
+    s.accentColor,
+    s.fontColor,
+  ]);
   return (
     <StyledTopBar>
       <StyledTopBarButtons>
@@ -43,6 +48,8 @@ function TopBar({
         value={pathSearch}
         onChange={onPathInputChange}
         onKeyDown={onPathInputSubmit}
+        backgroundColor={backgroundColor}
+        color={fontColor}
       />
     </StyledTopBar>
   );
@@ -53,7 +60,7 @@ function FileBrowser({ path = defaultPath }: FileBrowserProps) {
   const appRef = useRef<HTMLDivElement>(null);
 
   const [pathSearch, setPathSearch] = useState<string>(
-    fs.currentDirectory.path
+    fs.currentDirectory.path,
   );
 
   useEffect(() => {

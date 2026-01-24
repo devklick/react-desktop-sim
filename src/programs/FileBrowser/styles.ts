@@ -48,13 +48,19 @@ export const StyledTopBarButton = styled.div`
   }
 `;
 
-export const StyledTopBarPath = styled.input`
+interface StyledTopBarPathProps {
+  backgroundColor: string;
+  color: string;
+}
+export const StyledTopBarPath = styled.input<StyledTopBarPathProps>`
   height: 30px;
   width: 100%;
   padding: 5px 10px;
   border-radius: 50px;
   border: none;
   box-sizing: border-box;
+  background-color: ${(props) => props.backgroundColor};
+  color: ${(props) => props.color};
 
   &:focus-visible {
     outline: none;
