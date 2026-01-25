@@ -1,10 +1,4 @@
-import React, {
-  KeyboardEvent,
-  RefObject,
-  useCallback,
-  useEffect,
-  useRef,
-} from "react";
+import React, { KeyboardEvent, RefObject, useCallback, useRef } from "react";
 import useWindowManagerStore, {
   BaseProps,
 } from "../../stores/windowManagerStore";

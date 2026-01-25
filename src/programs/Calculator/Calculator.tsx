@@ -23,7 +23,7 @@ interface CalculatorProps {}
 const isDigit = (key: string) => /^[0-9]$/.test(key);
 const operators = new Set(["+", "-", "*", "/", "%"]);
 
-export const Calculator = forwardRef<CalculatorHandles, CalculatorProps>(
+const Calculator = forwardRef<CalculatorHandles, CalculatorProps>(
   (_props, ref) => {
     const elementRef = useRef<HTMLDivElement>(null);
     const [input, setInput] = useState<string>("");
@@ -156,3 +156,4 @@ export const Calculator = forwardRef<CalculatorHandles, CalculatorProps>(
     );
   },
 );
+export default Calculator;

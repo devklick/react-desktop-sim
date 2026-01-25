@@ -10,7 +10,10 @@ import { MenuItemProps } from "../../MenuItems";
 import { StyledIcon, StyledLauncher } from "./styles";
 import ContextMenu from "../../ContextMenu";
 import { BorderedAppContentHandles } from "../../BorderedApp/BorderedApp";
-interface LauncherProps<T extends BorderedAppContentHandles> {
+interface LauncherProps<
+  T extends BorderedAppContentHandles<E>,
+  E extends HTMLElement = HTMLElement,
+> {
   windowType: string;
   WindowTitle: string;
   windowId?: string;
@@ -23,7 +26,10 @@ interface LauncherProps<T extends BorderedAppContentHandles> {
   contentRef: RefObject<T>;
 }
 
-function Launcher<T extends BorderedAppContentHandles>({
+function Launcher<
+  T extends BorderedAppContentHandles<E>,
+  E extends HTMLElement = HTMLElement,
+>({
   windowType,
   windowId,
   WindowTitle,

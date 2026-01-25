@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import Launcher from "../../../components/BottomBar/Launcher";
-import { Calculator, CalculatorHandles } from "../Calculator";
+import Calculator, { CalculatorHandles } from "../Calculator";
 
 interface CalculatorLauncherProps {}
 
