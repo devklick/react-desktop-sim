@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-import { darken } from "polished";
+import { darken, getLuminance, lighten } from "polished";
+import { isLight } from "../../common/utils/colorUtils";
 
 interface StyledCalendarLayoutProps {
   sidebarOpen: boolean;
@@ -11,27 +12,6 @@ export const StyledCalendarLayout = styled.div<StyledCalendarLayoutProps>`
   height: 100%;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
-`;
-
-interface StyledCalendarNavigationSectionProps {}
-
-export const StyledCalendarNavigationSection = styled.div<StyledCalendarNavigationSectionProps>`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-`;
-
-interface StyledCalendarDaysFrameProps {
-  frameColor: string;
-}
-
-export const StyledCalendarDaysFrame = styled.div<StyledCalendarDaysFrameProps>`
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  background: ${(props) => props.frameColor};
-  padding: 1px;
   box-sizing: border-box;
 `;
 
@@ -60,16 +40,31 @@ interface StyledCalendarDayProps {
 export const StyledCalendarDay = styled.div<StyledCalendarDayProps>`
   display: flex;
   flex-direction: column;
-  background: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.backgroundColor};
   color: ${(props) =>
-    props.currentMonth ? undefined : darken(0.5, props.color)};
+    props.currentMonth
+      ? undefined
+      : getLuminance(props.color) > 0.5
+        ? darken(0.3, props.color)
+        : lighten(0.3, props.color)};
+  transition: background-color 0.3s;
+  :hover {
+    background-color: ${(props) =>
+      isLight(props.backgroundColor)
+        ? darken(0.1, props.backgroundColor)
+        : lighten(0.1, props.backgroundColor)};
+  }
 `;
 
-interface StyledCalendarNavigationProps {}
-export const StyledCalendarNavigation = styled.div<StyledCalendarNavigationProps>`
+interface StyledCalendarDaysFrameProps {
+  frameColor: string;
+}
+
+export const StyledCalendarDaysFrame = styled.div<StyledCalendarDaysFrameProps>`
   width: 100%;
-  display: flex;
+  height: 100%;
+  border-radius: 10px;
+  background: ${(props) => props.frameColor};
+  padding: 1px;
+  box-sizing: border-box;
 `;
-
-interface StyledNavigationButtonProps {}
-export const StyledNavigationButton = styled.button<StyledNavigationButtonProps>``;
