@@ -1,7 +1,9 @@
+import { useRef } from "react";
 import TextEditor from "..";
 import Launcher from "../../../components/BottomBar/Launcher";
 import { MenuItemProps } from "../../../components/MenuItems";
 import icon from "./text-editor-launcher-icon.svg";
+import { TextEditorHandles } from "../TextEditor";
 
 const windowType = "text-editor";
 
@@ -54,6 +56,7 @@ const menus: MenuItemProps[] = [
 
 // eslint-disable-next-line no-empty-pattern
 function TextEditorLauncher({}: TextEditorLauncherProps) {
+  const textEditorRef = useRef<TextEditorHandles>(null);
   return (
     <Launcher
       windowType={windowType}
@@ -62,9 +65,8 @@ function TextEditorLauncher({}: TextEditorLauncherProps) {
       menus={menus}
       appContent={<TextEditor />}
       icon={icon}
-    >
-      {/* <Icon style={{ width: "100%", height: "100%" }} /> */}
-    </Launcher>
+      contentRef={textEditorRef}
+    />
   );
 }
 

@@ -1,5 +1,6 @@
-import Calculator from "..";
+import { useRef } from "react";
 import Launcher from "../../../components/BottomBar/Launcher";
+import { Calculator, CalculatorHandles } from "../Calculator";
 
 interface CalculatorLauncherProps {}
 
@@ -7,6 +8,7 @@ const windowType = "calculator";
 
 // eslint-disable-next-line no-empty-pattern
 function CalculatorLauncher({}: CalculatorLauncherProps) {
+  const ref = useRef<CalculatorHandles>(null);
   return (
     <Launcher
       windowType={windowType}
@@ -17,7 +19,8 @@ function CalculatorLauncher({}: CalculatorLauncherProps) {
       minDimensions={{ height: 400, width: 250 }}
       icon=""
       menus={[]}
-      appContent={<Calculator />}
+      appContent={<Calculator ref={ref} />}
+      contentRef={ref}
     />
   );
 }

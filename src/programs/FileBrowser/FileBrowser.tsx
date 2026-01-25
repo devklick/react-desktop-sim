@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 
 import useLocalFSWithHistory from "../../hooks/useLocalFSWithHistory";
 import AppSideBar from "../../components/AppSideBar";
@@ -13,12 +19,14 @@ import {
   StyledTopBarPath,
 } from "./styles";
 import useSystemSettings from "../../stores/systemSettingsStore";
+import { BorderedAppContentHandles } from "../../components/BorderedApp/BorderedApp";
 
 const defaultPath = "/home/user";
 
 interface FileBrowserProps {
   path?: string;
 }
+export type FileBrowserHandles = BorderedAppContentHandles<HTMLDivElement>;
 
 interface TopBarProps {
   pathSearch: string;
@@ -55,54 +63,61 @@ function TopBar({
   );
 }
 
-function FileBrowser({ path = defaultPath }: FileBrowserProps) {
-  const fs = useLocalFSWithHistory(path);
-  const appRef = useRef<HTMLDivElement>(null);
+const FileBrowser = forwardRef<FileBrowserHandles, FileBrowserProps>(
+  ({ path = defaultPath }, ref) => {
+    const fs = useLocalFSWithHistory(path);
+    const appRef = useRef<HTMLDivElement>(null);
 
-  const [pathSearch, setPathSearch] = useState<string>(
-    fs.currentDirectory.path,
-  );
+    useImperativeHandle(ref, () => ({
+      onParentKeyDown() {},
+      element: appRef.current,
+    }));
 
-  useEffect(() => {
-    setPathSearch(fs.currentDirectory.path);
-  }, [fs.currentDirectory]);
+    const [pathSearch, setPathSearch] = useState<string>(
+      fs.currentDirectory.path,
+    );
 
-  function onPathInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setPathSearch(e.currentTarget.value);
-  }
+    useEffect(() => {
+      setPathSearch(fs.currentDirectory.path);
+    }, [fs.currentDirectory]);
 
-  function onPathInputSubmit(e: React.KeyboardEvent) {
-    if (e.code === "Enter") {
-      fs.navToPath(pathSearch);
+    function onPathInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+      setPathSearch(e.currentTarget.value);
     }
-  }
 
-  return (
-    <StyledFileBrowser ref={appRef}>
-      <TopBar
-        pathSearch={pathSearch}
-        onPathInputChange={onPathInputChange}
-        onPathInputSubmit={onPathInputSubmit}
-        navBack={fs.navBack}
-        navForward={fs.navForward}
-      />
+    function onPathInputSubmit(e: React.KeyboardEvent) {
+      if (e.code === "Enter") {
+        fs.navToPath(pathSearch);
+      }
+    }
 
-      <AppSideBar
-        items={fs.favorites.map((fav) => ({
-          title: fs.getNameFromPath(fav) ?? "",
-          isActive: fav === fs.currentDirectory.path,
-          onClick: () => fs.navToPath(fav),
-        }))}
-      />
+    return (
+      <StyledFileBrowser ref={appRef}>
+        <TopBar
+          pathSearch={pathSearch}
+          onPathInputChange={onPathInputChange}
+          onPathInputSubmit={onPathInputSubmit}
+          navBack={fs.navBack}
+          navForward={fs.navForward}
+        />
 
-      <MainContent
-        currentDirectory={fs.currentDirectory}
-        openFSObject={fs.navToObject}
-        appRef={appRef}
-      />
-      <StyledBottomBar />
-    </StyledFileBrowser>
-  );
-}
+        <AppSideBar
+          items={fs.favorites.map((fav) => ({
+            title: fs.getNameFromPath(fav) ?? "",
+            isActive: fav === fs.currentDirectory.path,
+            onClick: () => fs.navToPath(fav),
+          }))}
+        />
+
+        <MainContent
+          currentDirectory={fs.currentDirectory}
+          openFSObject={fs.navToObject}
+          appRef={appRef}
+        />
+        <StyledBottomBar />
+      </StyledFileBrowser>
+    );
+  },
+);
 
 export default FileBrowser;

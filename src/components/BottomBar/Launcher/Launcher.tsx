@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { RefObject, useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
 
 import useConditionalClick from "../../../hooks/useConditionalClick";
@@ -9,7 +9,8 @@ import { MenuItemProps } from "../../MenuItems";
 
 import { StyledIcon, StyledLauncher } from "./styles";
 import ContextMenu from "../../ContextMenu";
-interface LauncherProps {
+import { BorderedAppContentHandles } from "../../BorderedApp/BorderedApp";
+interface LauncherProps<T extends BorderedAppContentHandles> {
   windowType: string;
   WindowTitle: string;
   windowId?: string;
@@ -19,9 +20,10 @@ interface LauncherProps {
   menus?: Array<MenuItemProps>;
   appContent: JSX.Element;
   icon: string;
+  contentRef: RefObject<T>;
 }
 
-function Launcher({
+function Launcher<T extends BorderedAppContentHandles>({
   windowType,
   windowId,
   WindowTitle,
@@ -31,7 +33,8 @@ function Launcher({
   menus,
   appContent,
   icon,
-}: React.PropsWithChildren<LauncherProps>) {
+  contentRef,
+}: React.PropsWithChildren<LauncherProps<T>>) {
   const winMan = useWindowManagerStore();
   const ref = useRef<HTMLDivElement>(null);
   const [contextOpen, setContextOpen] = useState(false);
@@ -62,6 +65,7 @@ function Launcher({
           y: getInitialPosition("y"),
         },
         menus,
+        contentRef,
       },
       key: id,
       children: appContent,

@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import useToggle from "../../hooks/useToggle";
 import {
   StyledCalendarDay,
@@ -10,11 +16,12 @@ import {
   StyledNavigationButton,
 } from "./styles";
 import useSystemSettings from "../../stores/systemSettingsStore";
+import { BorderedAppContentHandles } from "../../components/BorderedApp/BorderedApp";
 
+type CalendarHandles = BorderedAppContentHandles<HTMLDivElement>;
 interface CalendarProps {}
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function Calendar(_props: CalendarProps) {
+const Calendar = forwardRef<CalendarHandles, CalendarProps>((_props, ref) => {
   const sidebarToggle = useToggle();
   const calendarRef = useRef<HTMLDivElement>(null);
   const [mainColor, accentColor, fontColor] = useSystemSettings((s) => [
@@ -31,6 +38,11 @@ function Calendar(_props: CalendarProps) {
   const wrapMonth = (m: number) => ((m % 12) + 12) % 12;
   const nextMonth = () => setMonth((x) => wrapMonth(x + 1));
   const prevMonth = () => setMonth((x) => wrapMonth(x - 1));
+
+  useImperativeHandle(ref, () => ({
+    onParentKeyDown() {},
+    element: calendarRef.current,
+  }));
 
   useEffect(() => {
     console.log("sidebar toggle", sidebarToggle.state);
@@ -164,6 +176,6 @@ function Calendar(_props: CalendarProps) {
       </StyledCalendarDaysFrame>
     </StyledCalendarLayout>
   );
-}
+});
 
 export default Calendar;

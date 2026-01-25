@@ -1,5 +1,6 @@
+import { useRef } from "react";
 import Launcher from "../../../components/BottomBar/Launcher";
-import WebBrowser from "../WebBrowser";
+import WebBrowser, { WebBrowserHandles } from "../WebBrowser";
 
 interface WebBrowserLauncherProps {}
 
@@ -7,6 +8,7 @@ const windowType = "web-browser";
 
 // eslint-disable-next-line no-empty-pattern
 function WebBrowserLauncher({}: WebBrowserLauncherProps) {
+  const ref = useRef<WebBrowserHandles>(null);
   return (
     <Launcher
       windowType={windowType}
@@ -15,7 +17,8 @@ function WebBrowserLauncher({}: WebBrowserLauncherProps) {
       appContent={<WebBrowser />}
       icon=""
       menus={[]}
-    ></Launcher>
+      contentRef={ref}
+    />
   );
 }
 
