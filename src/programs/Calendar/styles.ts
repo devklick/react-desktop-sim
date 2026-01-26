@@ -1,6 +1,4 @@
 import styled from "@emotion/styled";
-import { darken, getLuminance, lighten } from "polished";
-import { isLight } from "../../common/utils/colorUtils";
 
 interface StyledCalendarLayoutProps {
   sidebarOpen: boolean;
@@ -10,9 +8,15 @@ interface StyledCalendarLayoutProps {
 export const StyledCalendarLayout = styled.div<StyledCalendarLayoutProps>`
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  /* flex-direction: column; */
   box-sizing: border-box;
+  grid-template-areas:
+    "nav nav side"
+    "days days side"
+    "days days side";
+  grid-template-rows: 50px 1fr 1fr;
+  grid-template-columns: 1fr 1fr minmax(150px, 1fr);
 `;
 
 interface StyledCalendarDaysProps {
@@ -31,31 +35,6 @@ export const StyledCalendarDays = styled.div<StyledCalendarDaysProps>`
   overflow: hidden;
 `;
 
-interface StyledCalendarDayProps {
-  backgroundColor: string;
-  color: string;
-  currentMonth: boolean;
-}
-
-export const StyledCalendarDay = styled.div<StyledCalendarDayProps>`
-  display: flex;
-  flex-direction: column;
-  background-color: ${(props) => props.backgroundColor};
-  color: ${(props) =>
-    props.currentMonth
-      ? undefined
-      : getLuminance(props.color) > 0.5
-        ? darken(0.3, props.color)
-        : lighten(0.3, props.color)};
-  transition: background-color 0.3s;
-  :hover {
-    background-color: ${(props) =>
-      isLight(props.backgroundColor)
-        ? darken(0.1, props.backgroundColor)
-        : lighten(0.1, props.backgroundColor)};
-  }
-`;
-
 interface StyledCalendarDaysFrameProps {
   frameColor: string;
 }
@@ -67,4 +46,5 @@ export const StyledCalendarDaysFrame = styled.div<StyledCalendarDaysFrameProps>`
   background: ${(props) => props.frameColor};
   padding: 1px;
   box-sizing: border-box;
+  grid-area: days;
 `;

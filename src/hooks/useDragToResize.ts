@@ -92,7 +92,6 @@ function useDragToResize({
           newWidth >= minDimensions.width &&
           (!maxDimensions || newWidth <= maxDimensions.width)
         ) {
-          console.log("maxwidth", maxDimensions?.width, "new width", newWidth);
           elementRect.current.width = newWidth;
           elementRef.current.style.width = `${elementRect.current.width}px`;
           elementRect.current.left = newLeft;

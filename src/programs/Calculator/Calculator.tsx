@@ -43,7 +43,7 @@ const Calculator = forwardRef<CalculatorHandles, CalculatorProps>(
     };
 
     useImperativeHandle(ref, () => ({
-      onParentKeyDown(e) {
+      onBorderedAppKeyDown(e) {
         const { key } = e;
 
         if (isDigit(key) || operators.has(key)) {

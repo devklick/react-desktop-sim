@@ -32,7 +32,7 @@ export interface BorderedAppContentHandles<T extends HTMLElement> {
    * Function for the app content (such as calculator, calendar etc) to implement
    * and handle keyDown events that fire from the bordered app.
    */
-  onParentKeyDown(e: React.KeyboardEvent): void;
+  onBorderedAppKeyDown?(e: React.KeyboardEvent): void;
   /**
    * A reference to the app content's main element.
    */
@@ -76,7 +76,7 @@ function BorderedApp<
 
   // Listen for keyDown events and send them down to the content rendered inside the bordered app
   const handleKeyDown = (e: KeyboardEvent) =>
-    contentRef.current?.onParentKeyDown(e);
+    contentRef.current?.onBorderedAppKeyDown?.(e);
 
   // Need a ref to point to the app for moving it around the screen
   const appRef = useRef<HTMLDivElement | null>(null);

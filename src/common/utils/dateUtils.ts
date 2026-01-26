@@ -1,3 +1,5 @@
+const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
 export function getMonthName(
   monthIndex: number,
   locale = "en-US",
@@ -29,4 +31,61 @@ export function isToday(
     month === today.getMonth() &&
     day === today.getDate()
   );
+}
+
+export function startOfDay(date: Date) {
+  return new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    0,
+    0,
+    0,
+    0,
+  );
+}
+
+export function startOfDayUTC(date: Date) {
+  return Date.UTC(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate(),
+    0,
+    0,
+    0,
+    0,
+  );
+}
+
+export function diffBetweenDates(start: Date, end: Date) {
+  const startOfEarlier = startOfDay(start);
+  const startOfEnd = startOfDay(end);
+
+  const utcEarlier = startOfDayUTC(startOfEarlier);
+  const utcLater = startOfDayUTC(startOfEnd);
+
+  return Math.round((utcLater - utcEarlier) / MS_PER_DAY);
+}
+
+export function toLocalISODateString(date: Date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+export function getSpannedDays(start: Date, end: Date): Date[] {
+  const days: Date[] = [];
+  let cursor = startOfDay(start);
+
+  while (cursor < end) {
+    days.push(cursor);
+    cursor = new Date(
+      cursor.getFullYear(),
+      cursor.getMonth(),
+      cursor.getDate() + 1,
+    );
+  }
+
+  return days;
 }

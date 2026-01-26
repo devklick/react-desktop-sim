@@ -1,68 +1,61 @@
 import { useCallback, useEffect, useState } from "react";
-import { getDayName, isToday } from "../../../common/utils/dateUtils";
+import { isToday, startOfDay } from "../../../common/utils/dateUtils";
 
 interface CalendarDay {
-  date: number;
-  day: string;
   isToday: boolean;
   isThisMonth: boolean;
+  date: Date;
 }
+
 export function useCalendar() {
-  const now = new Date();
-  const [year, setYear] = useState(now.getFullYear());
-  const [month, setMonth] = useState(now.getMonth());
-  const prevYear = () => setYear((x) => x - 1);
-  const nextYear = () => setYear((x) => x + 1);
-  const wrapMonth = (m: number) => ((m % 12) + 12) % 12;
-  const nextMonth = () => setMonth((x) => wrapMonth(x + 1));
-  const prevMonth = () => setMonth((x) => wrapMonth(x - 1));
+  const [cursor, setCursor] = useState(startOfDay(new Date()));
+
+  const nextMonth = () =>
+    setCursor((d) => new Date(d.getFullYear(), d.getMonth() + 1, d.getDate()));
+
+  const prevMonth = () =>
+    setCursor((d) => new Date(d.getFullYear(), d.getMonth() - 1, d.getDate()));
+
+  const nextYear = () =>
+    setCursor((d) => new Date(d.getFullYear() + 1, d.getMonth(), d.getDate()));
+
+  const prevYear = () =>
+    setCursor((d) => new Date(d.getFullYear() - 1, d.getMonth(), d.getDate()));
 
   const getCalendarDays = useCallback(() => {
+    const year = cursor.getFullYear();
+    const month = cursor.getMonth();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const firstDayOfMonth = new Date(year, month, 0).getDay(); // 0 - 6
     const calendarCellCount = 7 * 6; // 7 cols (1 per day), 6 rows
-    const date = new Date();
+    const startOfToday = startOfDay(new Date());
 
     const days: CalendarDay[] = [];
 
     for (let i = 0; i < calendarCellCount; i++) {
-      let dayNumber = i - firstDayOfMonth + 1;
-      const cellDayName = getDayName(i + 1);
-      const today = isToday(year, month, dayNumber, date);
+      const dayNumber = i - firstDayOfMonth + 1;
+      const today = isToday(year, month, dayNumber, startOfToday);
+      const date = startOfDay(
+        new Date(cursor.getFullYear(), cursor.getMonth(), dayNumber),
+      );
 
-      if (dayNumber < 1 || dayNumber > daysInMonth) {
-        dayNumber = new Date(year, month, dayNumber).getDate();
-        // Empty cell
-        days.push({
-          date: dayNumber,
-          day: cellDayName,
-          isToday: today,
-          isThisMonth: false,
-        });
-      } else {
-        // Valid day
-        days.push({
-          date: dayNumber,
-          day: cellDayName,
-          isToday: today,
-          isThisMonth: true,
-        });
-      }
+      const isThisMonth = dayNumber >= 1 && dayNumber <= daysInMonth;
+      days.push({ date, isToday: today, isThisMonth });
     }
     return days;
-  }, [month, year]);
+  }, [cursor]);
 
   const [days, setDays] = useState<Array<CalendarDay>>(getCalendarDays);
 
-  useEffect(() => setDays(getCalendarDays), [year, month, getCalendarDays]);
+  useEffect(() => setDays(getCalendarDays), [cursor, getCalendarDays]);
 
   return {
-    year,
-    month,
     prevMonth,
     nextMonth,
     prevYear,
     nextYear,
     days,
+    setCursor,
+    cursor,
   };
 }

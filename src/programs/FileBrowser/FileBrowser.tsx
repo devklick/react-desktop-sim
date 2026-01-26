@@ -69,7 +69,6 @@ const FileBrowser = forwardRef<FileBrowserHandles, FileBrowserProps>(
     const appRef = useRef<HTMLDivElement>(null);
 
     useImperativeHandle(ref, () => ({
-      onParentKeyDown() {},
       element: appRef.current,
     }));
 

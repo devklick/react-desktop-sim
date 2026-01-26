@@ -1,9 +1,4 @@
-import React, {
-  HTMLInputTypeAttribute,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { HTMLInputTypeAttribute, useRef, useState } from "react";
 
 import AppSideBar from "../../components/AppSideBar";
 import { getPages } from "./settingsPageConfig";
@@ -118,9 +113,6 @@ function Settings({}: SettingsProps) {
   const systemSettings = useSystemSettings();
   const pages = getPages(systemSettings);
   const [currentPage, setCurrentPage] = useState<string>(Object.keys(pages)[0]);
-  useEffect(() => {
-    console.log("settings changed");
-  }, [systemSettings]);
 
   function getItems(): Parameters<typeof AppSideBar>[0]["items"] {
     return Object.entries<SettingsPageProps>(pages).map(([type, page]) => ({

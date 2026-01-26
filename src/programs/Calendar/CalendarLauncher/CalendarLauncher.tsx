@@ -13,6 +13,7 @@ function CalendarLauncher(_props: CalendarLauncherProps) {
       windowType={"calendar"}
       WindowTitle="Calendar"
       initialDimensions={{ height: 500, width: 500 }}
+      minDimensions={{ height: 500, width: 500 }}
       menus={[]}
       appContent={<Calendar />}
       icon=""

@@ -10,7 +10,6 @@ const WebBrowser = forwardRef<WebBrowserHandles, WebBrowserProps>(
   (_props, ref) => {
     const elementRef = useRef<HTMLDivElement>();
     useImperativeHandle(ref, () => ({
-      onParentKeyDown() {},
       element: elementRef.current,
     }));
     return (

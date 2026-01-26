@@ -12,7 +12,6 @@ const TextEditor = forwardRef<TextEditorHandles, TextEditorProps>(
     const settings = useSystemSettings();
 
     useImperativeHandle(ref, () => ({
-      onParentKeyDown() {},
       element: elementRef.current,
     }));
 

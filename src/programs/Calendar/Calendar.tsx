@@ -1,7 +1,6 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import useToggle from "../../hooks/useToggle";
 import {
-  StyledCalendarDay,
   StyledCalendarDays,
   StyledCalendarDaysFrame,
   StyledCalendarLayout,
@@ -10,6 +9,8 @@ import useSystemSettings from "../../stores/systemSettingsStore";
 import { BorderedAppContentHandles } from "../../components/BorderedApp/BorderedApp";
 import CalendarNavigation from "./CalendarNavigation/CalendarNavigation";
 import { useCalendar } from "./hooks/useCalendar";
+import CalendarSidebar from "./CalendarSidebar/CalendarSidebar";
+import CalendarDay from "./CalendarDay/CalendarDay";
 
 type CalendarHandles = BorderedAppContentHandles<HTMLDivElement>;
 
@@ -19,44 +20,11 @@ const Calendar = forwardRef<CalendarHandles, CalendarProps>((_props, ref) => {
   const sidebarToggle = useToggle();
   const calendarRef = useRef<HTMLDivElement>(null);
   const calendar = useCalendar();
-  const [mainColor, accentColor, fontColor] = useSystemSettings((s) => [
-    s.mainColor,
-    s.accentColor,
-    s.fontColor,
-  ]);
+  const [accentColor] = useSystemSettings((s) => [s.accentColor]);
 
   useImperativeHandle(ref, () => ({
-    onParentKeyDown() {},
     element: calendarRef.current,
   }));
-
-  useEffect(() => {
-    console.log("sidebar toggle", sidebarToggle.state);
-  }, [sidebarToggle.state]);
-
-  useEffect(() => {
-    if (!calendarRef.current) return;
-    const el = calendarRef.current;
-
-    function onResize(entries: ResizeObserverEntry[]) {
-      const entry = entries[0];
-      if (!entry) return;
-
-      const width = entry.contentRect.width;
-
-      const wide = width >= 600;
-      sidebarToggle.setState(wide);
-    }
-
-    const observer = new ResizeObserver(onResize);
-
-    observer.observe(el);
-
-    return () => {
-      if (el) observer.unobserve(el);
-      observer.disconnect();
-    };
-  });
 
   return (
     <StyledCalendarLayout
@@ -65,28 +33,27 @@ const Calendar = forwardRef<CalendarHandles, CalendarProps>((_props, ref) => {
       className="calendar"
     >
       <CalendarNavigation
-        month={calendar.month}
-        year={calendar.year}
+        month={calendar.cursor.getMonth()}
+        year={calendar.cursor.getFullYear()}
         onClickNextMonth={calendar.nextMonth}
         onClickNextYear={calendar.nextYear}
         onClickPrevMonth={calendar.prevMonth}
         onClickPrevYear={calendar.prevYear}
       />
+      <CalendarSidebar date={calendar.cursor} />
       <StyledCalendarDaysFrame frameColor={accentColor}>
         <StyledCalendarDays
           borderColor={accentColor}
           className="calendar__days"
         >
-          {calendar.days.map(({ date, day, isToday, isThisMonth }) => (
-            <StyledCalendarDay
-              backgroundColor={mainColor}
-              color={fontColor}
-              currentMonth={isThisMonth}
-            >
-              <span>{day}</span>
-              <span>{date}</span>
-              {isToday && <span>TODAY</span>}
-            </StyledCalendarDay>
+          {calendar.days.map((day) => (
+            <CalendarDay
+              date={day.date}
+              isThisMonth={day.isThisMonth}
+              isToday={day.isToday}
+              onClick={() => calendar.setCursor(day.date)}
+              key={day.date.toISOString()}
+            />
           ))}
         </StyledCalendarDays>
       </StyledCalendarDaysFrame>

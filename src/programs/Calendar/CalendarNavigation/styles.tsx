@@ -6,6 +6,7 @@ interface StyledCalendarNavigationProps {}
 export const StyledCalendarNavigation = styled.div<StyledCalendarNavigationProps>`
   width: 100%;
   display: flex;
+  grid-area: nav;
 `;
 
 interface StyledNavigationButtonProps {}
