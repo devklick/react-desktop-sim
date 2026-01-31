@@ -123,7 +123,7 @@ const Calculator = forwardRef<CalculatorHandles, CalculatorProps>(
 
     return (
       <StyledCalc ref={elementRef}>
-        <StyledInputOutput direction="input">
+        <StyledInputOutput direction="input" roundTop>
           <StyledInputOutputContents>{input}</StyledInputOutputContents>
         </StyledInputOutput>
         <StyledInputOutput direction="output">

@@ -9,7 +9,7 @@ export const StyledCalc = styled.div`
     "input"
     "output"
     "buttons";
-  padding: 10px;
+  /* padding: 5px; */
   border-radius: 10px;
   box-sizing: border-box;
   gap: 10px;
@@ -17,6 +17,7 @@ export const StyledCalc = styled.div`
 
 export const StyledInputOutput = styled.div<{
   direction: "input" | "output";
+  roundTop?: boolean;
 }>`
   box-shadow: 0px 0px 4px rgb(0, 0, 0, 0.5) inset;
   font-size: ${(props) => (props.direction === "input" ? 20 : 16)}px;
@@ -28,10 +29,15 @@ export const StyledInputOutput = styled.div<{
   padding: 20px;
   box-sizing: border-box;
   grid-area: ${(props) => props.direction};
+  border-top-left-radius: ${(p) => (p.roundTop ? "10px" : 0)};
+  border-top-right-radius: ${(p) => (p.roundTop ? "10px" : 0)};
+  overflow: hidden;
 `;
 
 export const StyledInputOutputContents = styled.div`
   text-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5);
+  overflow-x: auto;
+  width: 100%;
 `;
 
 export const StyledButtons = styled.div`
