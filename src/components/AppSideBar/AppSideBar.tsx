@@ -21,7 +21,7 @@ function AppSideBar({ items }: AppSideBarProps) {
             onClick={item.onClick}
             key={item.title}
             active={item.isActive ?? false}
-            activeColor={settings.accentColor}
+            activeColor={settings.secondaryColor}
           >
             {item.title}
           </StyledItem>

@@ -18,7 +18,7 @@ const TextEditor = forwardRef<TextEditorHandles, TextEditorProps>(
     return (
       <StyledTextEditor className="text-editor" ref={elementRef}>
         <StyledTextArea
-          selectedColor={settings.accentColor}
+          selectedColor={settings.secondaryColor}
           className="text-editor__content"
         />
       </StyledTextEditor>

@@ -33,6 +33,10 @@ export function isToday(
   );
 }
 
+export function isSameDay(date1: Date, date2: Date): boolean {
+  return startOfDayUTC(date1) === startOfDayUTC(date2);
+}
+
 export function startOfDay(date: Date) {
   return new Date(
     date.getFullYear(),

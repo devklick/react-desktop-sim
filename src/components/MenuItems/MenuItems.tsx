@@ -131,7 +131,7 @@ function MenuItem({
       onClick={handleOnClick}
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={handleOnMouseLeave}
-      hoverColor={settings.accentColor}
+      hoverColor={settings.secondaryColor}
     >
       <span>{title}</span>
       {items && open && (

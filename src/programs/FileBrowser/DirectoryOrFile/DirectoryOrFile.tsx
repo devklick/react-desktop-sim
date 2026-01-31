@@ -37,7 +37,7 @@ function DirectoryOrFile({
   const clickPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const [contextMenuOpen, setContextMenuOpen] = useState(false);
   const [contextAction, setContextAction] = useState<ContextMenuAction | null>(
-    null
+    null,
   );
   const settings = useSystemSettings();
   const fs = useLocalFS();
@@ -52,7 +52,7 @@ function DirectoryOrFile({
   return (
     <StyledItem
       selected={selected}
-      selectedColor={settings.accentColor}
+      selectedColor={settings.secondaryColor}
       onDoubleClick={() => openFSObject(fsObject)}
       onClick={() => setSelected(fsObject.path)}
       key={fsObject.path}
@@ -65,7 +65,7 @@ function DirectoryOrFile({
             fsObject,
             fs,
             setContextAction,
-            setContextMenuOpen
+            setContextMenuOpen,
           )}
           close={() => setContextMenuOpen(!contextMenuOpen)}
         />

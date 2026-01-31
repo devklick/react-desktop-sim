@@ -11,6 +11,7 @@ import CalendarNavigation from "./CalendarNavigation/CalendarNavigation";
 import { useCalendar } from "./hooks/useCalendar";
 import CalendarSidebar from "./CalendarSidebar/CalendarSidebar";
 import CalendarDay from "./CalendarDay/CalendarDay";
+import { isSameDay } from "../../common/utils/dateUtils";
 
 type CalendarHandles = BorderedAppContentHandles<HTMLDivElement>;
 
@@ -20,7 +21,7 @@ const Calendar = forwardRef<CalendarHandles, CalendarProps>((_props, ref) => {
   const sidebarToggle = useToggle();
   const calendarRef = useRef<HTMLDivElement>(null);
   const calendar = useCalendar();
-  const [accentColor] = useSystemSettings((s) => [s.accentColor]);
+  const [accentColor] = useSystemSettings((s) => [s.secondaryColor]);
 
   useImperativeHandle(ref, () => ({
     element: calendarRef.current,
@@ -53,6 +54,7 @@ const Calendar = forwardRef<CalendarHandles, CalendarProps>((_props, ref) => {
               isToday={day.isToday}
               onClick={() => calendar.setCursor(day.date)}
               key={day.date.toISOString()}
+              isSelected={isSameDay(calendar.cursor, day.date)}
             />
           ))}
         </StyledCalendarDays>

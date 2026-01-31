@@ -6,7 +6,7 @@ function isHexColorCode(value: string) {
 }
 
 export function getPages(
-  systemsSettings: SystemSettingState
+  systemsSettings: SystemSettingState,
 ): Record<string, SettingsPageProps> {
   return {
     appearance: {
@@ -44,12 +44,12 @@ export function getPages(
           title: "Accent Color",
           description:
             "The accent for the desktop UI, for things such as currently-selected items (not yet supported)",
-          currentValue: systemsSettings.accentColor,
+          currentValue: systemsSettings.secondaryColor,
           type: "color",
           valueValidation: (value) =>
             isHexColorCode(value) ? undefined : "Invalid HEX color code",
           onValueChanged(value) {
-            systemsSettings.setAccentColor(value);
+            systemsSettings.setSecondaryColor(value);
           },
         },
         {

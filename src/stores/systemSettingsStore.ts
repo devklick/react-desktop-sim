@@ -13,7 +13,8 @@ type Theme = Omit<
 
 const defaultTheme: Theme = {
   mainColor: "#2e3440",
-  accentColor: "#454e60",
+  primaryColor: "#5e81ac",
+  secondaryColor: "#454e60",
   fontColor: "#ffffff",
   iconColor: "#9298b9",
   background: "https://regolith-linux.org/images/releases/nord-dark.png",
@@ -21,12 +22,13 @@ const defaultTheme: Theme = {
 
 export interface SystemSettingState {
   mainColor: string;
-  accentColor: string;
+  primaryColor: string;
+  secondaryColor: string;
   fontColor: string;
   iconColor: string;
   background: string;
   setMainColor: (color: string) => void;
-  setAccentColor: (color: string) => void;
+  setSecondaryColor: (color: string) => void;
   setFontColor: (color: string) => void;
   setIconColor: (color: string) => void;
   setBackground: (url: string) => void;
@@ -37,8 +39,8 @@ export const useSystemSettings = create<SystemSettingState>()(
   persist(
     (set) => ({
       ...defaultTheme,
-      setAccentColor(accentColor) {
-        set({ accentColor });
+      setSecondaryColor(accentColor) {
+        set({ secondaryColor: accentColor });
       },
       setMainColor(mainColor) {
         set({ mainColor });
@@ -58,8 +60,8 @@ export const useSystemSettings = create<SystemSettingState>()(
     }),
     {
       name: "system-settings",
-    }
-  )
+    },
+  ),
 );
 
 export default useSystemSettings;

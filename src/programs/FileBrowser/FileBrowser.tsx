@@ -43,7 +43,7 @@ function TopBar({
   navBack,
 }: TopBarProps) {
   const [backgroundColor, fontColor] = useSystemSettings((s) => [
-    s.accentColor,
+    s.secondaryColor,
     s.fontColor,
   ]);
   return (

@@ -1,12 +1,13 @@
 import { getDayName } from "../../../common/utils/dateUtils";
 import useSystemSettings from "../../../stores/systemSettingsStore";
-import { StyledCalendarDay } from "./styles";
+import { StyledCalendarDay, StyledCalendarDayNo } from "./styles";
 
 interface CalendarDayProps {
   date: Date;
   isToday: boolean;
   isThisMonth: boolean;
   onClick(): void;
+  isSelected: boolean;
 }
 
 export default function CalendarDay({
@@ -14,12 +15,11 @@ export default function CalendarDay({
   isToday,
   isThisMonth,
   onClick,
+  isSelected,
 }: CalendarDayProps) {
-  const [mainColor, fontColor] = useSystemSettings((s) => [
-    s.mainColor,
-    s.accentColor,
-    s.fontColor,
-  ]);
+  const [mainColor, accentColor, fontColor, primaryColor] = useSystemSettings(
+    (s) => [s.mainColor, s.secondaryColor, s.fontColor, s.primaryColor],
+  );
   const dayOfWeek = getDayName(date.getDay());
   const dayOfMonth = date.getDate();
 
@@ -29,10 +29,14 @@ export default function CalendarDay({
       color={fontColor}
       currentMonth={isThisMonth}
       onClick={onClick}
+      outlineColor={primaryColor}
+      isSelected={isSelected}
     >
       <span>{dayOfWeek}</span>
-      <span>{dayOfMonth}</span>
-      {isToday && <span>TODAY</span>}
+      <span>
+        <StyledCalendarDayNo>{dayOfMonth}</StyledCalendarDayNo>
+      </span>
+      {/* {isToday && <span>TODAY</span>} */}
     </StyledCalendarDay>
   );
 }
