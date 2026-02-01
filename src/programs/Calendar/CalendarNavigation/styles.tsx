@@ -5,15 +5,15 @@ interface StyledCalendarNavigationSectionProps {}
 interface StyledCalendarNavigationProps {}
 export const StyledCalendarNavigation = styled.div<StyledCalendarNavigationProps>`
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
   grid-area: nav;
+  padding: 6px 0;
 `;
 
-interface StyledNavigationButtonProps {}
-export const StyledNavigationButton = styled.button<StyledNavigationButtonProps>``;
-
 export const StyledCalendarNavigationSection = styled.div<StyledCalendarNavigationSectionProps>`
-  flex: 1;
-  display: flex;
-  justify-content: center;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 30px auto 30px;
 `;

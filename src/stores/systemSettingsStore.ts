@@ -17,6 +17,9 @@ const defaultTheme: Theme = {
   secondaryColor: "#454e60",
   fontColor: "#ffffff",
   iconColor: "#9298b9",
+  errorColor: "#bf616a",
+  warningColor: "#ebcb8b",
+  successColor: "#a3be8c",
   background: "https://regolith-linux.org/images/releases/nord-dark.png",
 };
 
@@ -24,6 +27,9 @@ export interface SystemSettingState {
   mainColor: string;
   primaryColor: string;
   secondaryColor: string;
+  errorColor: string;
+  warningColor: string;
+  successColor: string;
   fontColor: string;
   iconColor: string;
   background: string;

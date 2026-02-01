@@ -32,6 +32,10 @@ function SettingsSection(section: SettingsSectionProps) {
   // to still be shown on the screen
   const updateStateDelay = useRef<NodeJS.Timeout | null>(null);
   const [value, setValue] = useState(section.currentValue);
+  const [buttonFontColor, buttonColor] = useSystemSettings((s) => [
+    s.fontColor,
+    s.errorColor,
+  ]);
   function getInputType(type: string): HTMLInputTypeAttribute {
     switch (type) {
       case "color":
@@ -69,7 +73,13 @@ function SettingsSection(section: SettingsSectionProps) {
     const type = getInputType(section.type);
     if (type === "button")
       return (
-        <Button name="Restore" onClick={() => section.onValueChanged("")} />
+        <Button
+          backgroundColor={buttonColor}
+          color={buttonFontColor}
+          onClick={() => section.onValueChanged("")}
+        >
+          Restore
+        </Button>
       );
     return (
       <StyledSectionValue

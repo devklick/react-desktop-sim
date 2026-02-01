@@ -1,5 +1,6 @@
 import useSystemSettings from "../../stores/systemSettingsStore";
-import { StyledItem, StyledItemContainer, StyledSideBar } from "./styles";
+import Button from "../Button";
+import { StyledItemContainer, StyledSideBar } from "./styles";
 
 interface SideBarItem {
   title: string;
@@ -12,19 +13,24 @@ interface AppSideBarProps {
 }
 
 function AppSideBar({ items }: AppSideBarProps) {
-  const settings = useSystemSettings();
+  const [buttonFontColor, buttonColor] = useSystemSettings((s) => [
+    s.fontColor,
+    s.mainColor,
+  ]);
   return (
     <StyledSideBar>
       <StyledItemContainer>
         {items.map((item) => (
-          <StyledItem
+          <Button
+            padding={"6px 10px"}
+            group="vertical"
             onClick={item.onClick}
-            key={item.title}
+            color={buttonFontColor}
+            backgroundColor={buttonColor}
             active={item.isActive ?? false}
-            activeColor={settings.secondaryColor}
           >
             {item.title}
-          </StyledItem>
+          </Button>
         ))}
       </StyledItemContainer>
     </StyledSideBar>

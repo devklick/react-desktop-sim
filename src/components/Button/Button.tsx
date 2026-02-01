@@ -1,21 +1,19 @@
-import { StyledButton } from "./styles";
+import { PropsWithChildren } from "react";
+import { StyledButton, StyledButtonProps } from "./styles";
 
-interface ButtonProps {
-  name: string;
-  onClick: () => void;
-  width?: string | number;
+interface ButtonProps extends StyledButtonProps {
+  onClick?: () => void;
   disabled?: boolean;
 }
 
 function Button({
-  name,
-  width = "100%",
-  disabled = false,
   onClick,
-}: ButtonProps) {
+  children,
+  ...rest
+}: PropsWithChildren<ButtonProps>) {
   return (
-    <StyledButton width={width} onClick={onClick} disabled={disabled}>
-      {name}
+    <StyledButton {...rest} onClick={onClick}>
+      {children}
     </StyledButton>
   );
 }

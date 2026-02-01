@@ -17,9 +17,12 @@ export default function CalendarDay({
   onClick,
   isSelected,
 }: CalendarDayProps) {
-  const [mainColor, accentColor, fontColor, primaryColor] = useSystemSettings(
-    (s) => [s.mainColor, s.secondaryColor, s.fontColor, s.primaryColor],
-  );
+  const [mainColor, fontColor, primaryColor] = useSystemSettings((s) => [
+    s.mainColor,
+    s.secondaryColor,
+    s.fontColor,
+    s.primaryColor,
+  ]);
   const dayOfWeek = getDayName(date.getDay());
   const dayOfMonth = date.getDate();
 
@@ -36,7 +39,7 @@ export default function CalendarDay({
       <span>
         <StyledCalendarDayNo>{dayOfMonth}</StyledCalendarDayNo>
       </span>
-      {/* {isToday && <span>TODAY</span>} */}
+      {isToday && <span>TODAY</span>}
     </StyledCalendarDay>
   );
 }

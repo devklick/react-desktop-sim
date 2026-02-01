@@ -14,12 +14,12 @@ import {
   StyledBottomBar,
   StyledFileBrowser,
   StyledTopBar,
-  StyledTopBarButton,
   StyledTopBarButtons,
   StyledTopBarPath,
 } from "./styles";
 import useSystemSettings from "../../stores/systemSettingsStore";
 import { BorderedAppContentHandles } from "../../components/BorderedApp/BorderedApp";
+import Button from "../../components/Button";
 
 const defaultPath = "/home/user";
 
@@ -34,6 +34,8 @@ interface TopBarProps {
   onPathInputSubmit: (e: React.KeyboardEvent) => void;
   navForward: () => void;
   navBack: () => void;
+  canNavForward: boolean;
+  canNavBack: boolean;
 }
 function TopBar({
   pathSearch,
@@ -41,16 +43,39 @@ function TopBar({
   onPathInputSubmit,
   navForward,
   navBack,
+  canNavBack,
+  canNavForward,
 }: TopBarProps) {
   const [backgroundColor, fontColor] = useSystemSettings((s) => [
     s.secondaryColor,
     s.fontColor,
+    s.primaryColor,
   ]);
   return (
-    <StyledTopBar>
-      <StyledTopBarButtons>
-        <StyledTopBarButton onClick={navBack}>←</StyledTopBarButton>
-        <StyledTopBarButton onClick={navForward}>→</StyledTopBarButton>
+    <StyledTopBar className="file-browser__to-bar">
+      <StyledTopBarButtons className="file-browser__to-bar-buttons">
+        <Button
+          height={"100%"}
+          onClick={navBack}
+          disabled={!canNavBack}
+          backgroundColor={backgroundColor}
+          color={fontColor}
+          group="horizontal"
+          borderRadius={6}
+        >
+          {"<"}
+        </Button>
+        <Button
+          height={"100%"}
+          onClick={navForward}
+          disabled={!canNavForward}
+          backgroundColor={backgroundColor}
+          color={fontColor}
+          group="horizontal"
+          borderRadius={6}
+        >
+          {">"}
+        </Button>
       </StyledTopBarButtons>
       <StyledTopBarPath
         value={pathSearch}
@@ -58,6 +83,7 @@ function TopBar({
         onKeyDown={onPathInputSubmit}
         backgroundColor={backgroundColor}
         color={fontColor}
+        className="file-browser__to-bar-path"
       />
     </StyledTopBar>
   );
@@ -98,6 +124,8 @@ const FileBrowser = forwardRef<FileBrowserHandles, FileBrowserProps>(
           onPathInputSubmit={onPathInputSubmit}
           navBack={fs.navBack}
           navForward={fs.navForward}
+          canNavBack={fs.canNavBack}
+          canNavForward={fs.canNavForward}
         />
 
         <AppSideBar

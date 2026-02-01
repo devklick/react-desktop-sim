@@ -110,6 +110,11 @@ function RenamePopup({
   const valueRef = useRef("");
   const fs = useLocalFS();
   const [error, setError] = useState(fs.validateFSObjectName(""));
+  const [primaryColor, fontColor, cancelColor] = useSystemSettings((s) => [
+    s.primaryColor,
+    s.fontColor,
+    s.errorColor,
+  ]);
 
   useBindKeyToAction({
     keys: ["Escape"],
@@ -155,13 +160,24 @@ function RenamePopup({
           error={error}
         />
 
-        <Row>
-          <Button name="Cancel" onClick={close} />
+        <Row gap={0}>
           <Button
-            name="Confirm"
+            group="horizontal"
+            onClick={close}
+            backgroundColor={cancelColor}
+            color={fontColor}
+          >
+            Cancel
+          </Button>
+          <Button
+            group="horizontal"
             onClick={handleClickConfirm}
             disabled={!!error}
-          />
+            backgroundColor={primaryColor}
+            color={fontColor}
+          >
+            Confrm
+          </Button>
         </Row>
       </Box>
     </AppPopup>
@@ -182,6 +198,11 @@ function DeletePopup({
   close,
 }: DeletePopupProps) {
   const fs = useLocalFS();
+  const [primaryColor, fontColor, cancelColor] = useSystemSettings((s) => [
+    s.primaryColor,
+    s.fontColor,
+    s.errorColor,
+  ]);
 
   function handleClickConfirm() {
     fs.delete(currentDirectory, fsObject);
@@ -191,9 +212,23 @@ function DeletePopup({
     <AppPopup appRef={appRef} close={close}>
       <HeaderBar header={`Delete ${fsObject.type}?`} />
       <Box>
-        <Row>
-          <Button name="Cancel" onClick={close} />
-          <Button name="Confirm" onClick={handleClickConfirm} />
+        <Row gap={0}>
+          <Button
+            onClick={close}
+            group="horizontal"
+            backgroundColor={cancelColor}
+            color={fontColor}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleClickConfirm}
+            group="horizontal"
+            backgroundColor={primaryColor}
+            color={fontColor}
+          >
+            Confirm
+          </Button>
         </Row>
       </Box>
     </AppPopup>

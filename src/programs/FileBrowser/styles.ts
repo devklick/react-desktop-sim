@@ -5,12 +5,15 @@ export const StyledFileBrowser = styled.div`
   height: 100%;
   display: grid;
   grid-template-columns: 150px auto;
-  grid-template-rows: 50px auto 25px;
+  grid-template-rows: 30px auto 25px;
   grid-template-areas:
     "top-bar top-bar"
     "side-bar main-content"
     "side-bar bottom-bar";
   border-radius: 10px;
+  grid-gap: 10px;
+  padding: 5px;
+  box-sizing: border-box;
 `;
 
 export const StyledTopBar = styled.div`
@@ -20,32 +23,17 @@ export const StyledTopBar = styled.div`
   box-sizing: border-box;
   display: flex;
   gap: 10px;
-  padding: 10px;
+  /* padding: 10px; */
   align-items: center;
 `;
 
 export const StyledTopBarButtons = styled.div`
   height: 100%;
+  width: 80px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-`;
-
-export const StyledTopBarButton = styled.div`
-  width: 50px;
-  text-align: center;
-  box-sizing: border-box;
-  border-radius: 20px;
-  box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5);
-  &:hover {
-    backdrop-filter: brightness(150%);
-    transition: ease-in 0.2s;
-  }
-  &:active {
-    box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5) inset;
-  }
 `;
 
 interface StyledTopBarPathProps {
@@ -53,7 +41,7 @@ interface StyledTopBarPathProps {
   color: string;
 }
 export const StyledTopBarPath = styled.input<StyledTopBarPathProps>`
-  height: 30px;
+  height: 100%;
   width: 100%;
   padding: 5px 10px;
   border-radius: 50px;

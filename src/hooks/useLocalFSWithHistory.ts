@@ -10,7 +10,7 @@ function useLocalFSWithHistory(currentPath: string) {
   const position = useRef<number>(0);
   const fs = useLocalFS();
   const [currentDirectory, setCurrentDirectory] = useState<FSDirectory>(
-    getDirOrDefault(currentPath)
+    getDirOrDefault(currentPath),
   );
 
   function getDirOrDefault(path: string, defaultValue = "/home/user") {
@@ -38,7 +38,7 @@ function useLocalFSWithHistory(currentPath: string) {
   }
 
   function navForward() {
-    if (history.current.length - 1 > position.current) {
+    if (canNavForward()) {
       position.current++;
       const dir = fs.getDirectory(history.current[position.current]);
       if (dir) setCurrentDirectory(dir);
@@ -46,17 +46,25 @@ function useLocalFSWithHistory(currentPath: string) {
   }
 
   function navBack() {
-    if (position.current && history.current.length) {
+    if (canNavBack()) {
       position.current--;
       const newPath = history.current[position.current];
       const dir = fs.getDirectory(newPath);
       if (dir) setCurrentDirectory(dir);
     }
   }
+  function canNavBack() {
+    return !!position.current && !!history.current.length;
+  }
+  function canNavForward() {
+    return history.current.length - 1 > position.current;
+  }
 
   return {
     currentDirectory,
     favorites: fs.favorites,
+    canNavBack: canNavBack(),
+    canNavForward: canNavForward(),
     navToPath,
     navToObject,
     getDirOrDefault,

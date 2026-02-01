@@ -1,8 +1,9 @@
 import { getMonthName } from "../../../common/utils/dateUtils";
+import Button from "../../../components/Button";
+import useSystemSettings from "../../../stores/systemSettingsStore";
 import {
   StyledCalendarNavigation,
   StyledCalendarNavigationSection,
-  StyledNavigationButton,
 } from "./styles";
 
 interface StyledNavigationProps {
@@ -21,34 +22,54 @@ export default function CalendarNavigation({
   onClickPrevMonth,
   onClickPrevYear,
 }: StyledNavigationProps) {
+  const [fontColor, buttonColor] = useSystemSettings((s) => [
+    s.fontColor,
+    s.mainColor,
+  ]);
   return (
     <StyledCalendarNavigation className="calendar__nav">
       <StyledCalendarNavigationSection className="calendar__nav-section">
-        <StyledNavigationButton
-          className="calendar__nav-button"
+        <Button
+          backgroundColor={buttonColor}
+          color={fontColor}
           onClick={onClickPrevMonth}
-        >{`<`}</StyledNavigationButton>
-        <StyledNavigationButton className="calendar__nav-button">
+          group="horizontal"
+        >{`<`}</Button>
+        <Button
+          backgroundColor={buttonColor}
+          color={fontColor}
+          group="horizontal"
+        >
           {getMonthName(month)}
-        </StyledNavigationButton>
-        <StyledNavigationButton
-          className="calendar__nav-button"
+        </Button>
+        <Button
+          backgroundColor={buttonColor}
+          color={fontColor}
           onClick={onClickNextMonth}
-        >{`>`}</StyledNavigationButton>
+          group="horizontal"
+        >{`>`}</Button>
       </StyledCalendarNavigationSection>
 
       <StyledCalendarNavigationSection className="calendar__nav-section">
-        <StyledNavigationButton
-          className="calendar__nav-button"
+        <Button
+          backgroundColor={buttonColor}
+          color={fontColor}
           onClick={onClickPrevYear}
-        >{`<`}</StyledNavigationButton>
-        <StyledNavigationButton className="calendar__nav-button">
+          group="horizontal"
+        >{`<`}</Button>
+        <Button
+          backgroundColor={buttonColor}
+          color={fontColor}
+          group="horizontal"
+        >
           {year}
-        </StyledNavigationButton>
-        <StyledNavigationButton
-          className="calendar__nav-button"
+        </Button>
+        <Button
+          backgroundColor={buttonColor}
+          color={fontColor}
           onClick={onClickNextYear}
-        >{`>`}</StyledNavigationButton>
+          group="horizontal"
+        >{`>`}</Button>
       </StyledCalendarNavigationSection>
     </StyledCalendarNavigation>
   );

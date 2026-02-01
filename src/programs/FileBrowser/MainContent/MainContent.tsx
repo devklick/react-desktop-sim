@@ -15,6 +15,7 @@ import Row from "../../../components/Row";
 import Button from "../../../components/Button";
 import useBindKeyToAction from "../../../hooks/useBindKeyToAction";
 import { StyledMainContent } from "./styles";
+import useSystemSettings from "../../../stores/systemSettingsStore";
 
 interface MainContentProps {
   currentDirectory: FSDirectory;
@@ -47,7 +48,7 @@ function MainContent({
         if (nameA < nameB) return -1;
         if (nameA > nameB) return 1;
         return 0;
-      }
+      },
     );
 
     return objects;
@@ -101,6 +102,11 @@ function CreateFSObjectPopup({
   const valueRef = useRef("");
   const fs = useLocalFS();
   const [error, setError] = useState(fs.validateFSObjectName(""));
+  const [fontColor, primaryColor, errorColor] = useSystemSettings((s) => [
+    s.fontColor,
+    s.primaryColor,
+    s.errorColor,
+  ]);
 
   useBindKeyToAction({
     keys: ["Escape"],
@@ -146,13 +152,24 @@ function CreateFSObjectPopup({
           error={error}
         />
 
-        <Row>
-          <Button name="Cancel" onClick={close} />
+        <Row gap={0}>
           <Button
-            name="Confirm"
+            group="horizontal"
+            color={fontColor}
+            backgroundColor={errorColor}
+            onClick={close}
+          >
+            Cancel
+          </Button>
+          <Button
+            group="horizontal"
+            color={fontColor}
+            backgroundColor={primaryColor}
             onClick={handleClickConfirm}
             disabled={!!error}
-          />
+          >
+            Confirm
+          </Button>
         </Row>
       </Box>
     </AppPopup>
