@@ -1,6 +1,7 @@
 import styled, { CSSObject } from "@emotion/styled";
 import { isLight } from "../../common/utils/colorUtils";
 import { darken, lighten } from "polished";
+import { CSSProperties } from "react";
 
 export interface StyledButtonProps {
   width?: string | number;
@@ -16,6 +17,7 @@ export interface StyledButtonProps {
   borderRadius?: number;
   group?: "horizontal" | "vertical";
   padding?: CSSObject["padding"];
+  justifyContent?: CSSProperties["justifyContent"];
 }
 
 export const StyledButton = styled.button<StyledButtonProps>`
@@ -25,6 +27,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
 function buildStyledButton({
   width = "100%",
   borderRadius = 6,
+  justifyContent = "center",
   ...props
 }: StyledButtonProps): CSSObject {
   return {
@@ -40,6 +43,9 @@ function buildStyledButton({
     backgroundColor: props.active
       ? getBackgroundColorActive(props)
       : props.backgroundColor,
+    display: "flex",
+    justifyContent,
+    alignItems: "center",
     ":hover": {
       backgroundColor: getBackgroundColorHover(props),
     },

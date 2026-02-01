@@ -13,9 +13,10 @@ interface AppSideBarProps {
 }
 
 function AppSideBar({ items }: AppSideBarProps) {
-  const [buttonFontColor, buttonColor] = useSystemSettings((s) => [
+  const [fontColor, buttonColor] = useSystemSettings((s) => [
     s.fontColor,
     s.mainColor,
+    s.secondaryColor,
   ]);
   return (
     <StyledSideBar>
@@ -25,9 +26,11 @@ function AppSideBar({ items }: AppSideBarProps) {
             padding={"6px 10px"}
             group="vertical"
             onClick={item.onClick}
-            color={buttonFontColor}
+            color={fontColor}
             backgroundColor={buttonColor}
             active={item.isActive ?? false}
+            justifyContent="start"
+            key={item.title}
           >
             {item.title}
           </Button>
