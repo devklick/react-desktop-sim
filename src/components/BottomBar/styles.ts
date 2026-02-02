@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { transparentize } from "polished";
 
 export const StyledContainer = styled.div`
   min-height: 0;
@@ -20,9 +21,11 @@ export const StyledBottomBar = styled.div<{ backgroundColor: string }>`
   display: flex;
   background-color: var(--ui-color-primary);
   border-radius: 50px;
-  background-color: #2e3440;
-  box-shadow: 0 -2px 10px 1px #11172b, 0 -2px 3px #bebebe inset;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => transparentize(0.5, props.backgroundColor)};
+  backdrop-filter: blur(5px);
+  box-shadow:
+    0 -2px 10px 1px #11172b,
+    0 -2px 3px #bebebe inset;
 `;
 
 export const StyledContents = styled.div`

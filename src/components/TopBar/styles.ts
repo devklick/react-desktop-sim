@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { transparentize } from "polished";
 
 export const StyledTopBarContainer = styled.div`
   grid-area: top-bar;
@@ -13,8 +14,11 @@ export const StyledTopBar = styled.div<{ backgroundColor: string }>`
   height: 100%;
   width: 100%;
   border-radius: 15px;
-  box-shadow: 0 -2px 10px 1px #11172b, 0 -2px 3px #bebebe inset;
-  background-color: ${(props) => props.backgroundColor};
+  box-shadow:
+    0 -2px 10px 1px #11172b,
+    0 -2px 3px #bebebe inset;
+  background-color: ${(props) => transparentize(0.5, props.backgroundColor)};
+  backdrop-filter: blur(5px);
 `;
 
 export const StyledTopBarContents = styled.div`

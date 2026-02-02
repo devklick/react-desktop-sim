@@ -3,14 +3,13 @@ import { StyledCalendarSidebar } from "./styles";
 
 interface CalendarSidebarProps {
   date: Date;
+  prevDay(): void;
+  nextDay(): void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function CalendarSidebar({ date }: CalendarSidebarProps) {
-  // const events = useCalendarEvents({ date });
+// eslint-disable-next-line no-empty-pattern
+export default function CalendarSidebar({}: CalendarSidebarProps) {
   return (
-    <StyledCalendarSidebar className="calendar__side-bar">
-      {date.toISOString()}
-    </StyledCalendarSidebar>
+    <StyledCalendarSidebar className="calendar__side-bar"></StyledCalendarSidebar>
   );
 }

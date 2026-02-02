@@ -12,10 +12,10 @@ export const StyledCalendarLayout = styled.div<StyledCalendarLayoutProps>`
   /* flex-direction: column; */
   box-sizing: border-box;
   grid-template-areas:
-    "nav nav side"
+    "nav nav nav"
     "days days side"
     "days days side";
-  grid-template-rows: 50px 1fr 1fr;
+  grid-template-rows: 40px 1fr 1fr;
   grid-template-columns: 1fr 1fr minmax(150px, 1fr);
 `;
 

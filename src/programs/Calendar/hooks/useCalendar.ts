@@ -10,6 +10,12 @@ interface CalendarDay {
 export function useCalendar() {
   const [cursor, setCursor] = useState(startOfDay(new Date()));
 
+  const nextDay = () =>
+    setCursor((d) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1));
+
+  const prevDay = () =>
+    setCursor((d) => new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1));
+
   const nextMonth = () =>
     setCursor((d) => new Date(d.getFullYear(), d.getMonth() + 1, d.getDate()));
 
@@ -50,6 +56,8 @@ export function useCalendar() {
   useEffect(() => setDays(getCalendarDays), [cursor, getCalendarDays]);
 
   return {
+    prevDay,
+    nextDay,
     prevMonth,
     nextMonth,
     prevYear,

@@ -1,5 +1,14 @@
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
+const ordinalSuffixes = {
+  one: "st",
+  two: "nd",
+  few: "rd",
+  other: "th",
+  many: "th",
+  zero: "th",
+} as const satisfies Record<Intl.LDMLPluralRule, string>;
+
 export function getMonthName(
   monthIndex: number,
   locale = "en-US",
@@ -12,12 +21,41 @@ export function getMonthName(
 
 export function getDayName(
   dayIndex: number,
+  locale?: "en-US",
+  format?: "long" | "short",
+): string;
+export function getDayName(
+  dayIndex: Date,
+  locale?: "en-US",
+  format?: "long" | "short",
+): string;
+export function getDayName(
+  d: number | Date,
   locale = "en-US",
   format: "long" | "short" = "short",
 ) {
+  const dayIndex = typeof d === "number" ? d : d.getDay();
   return new Intl.DateTimeFormat(locale, { weekday: format }).format(
     new Date(2021, 0, dayIndex + 3),
   );
+}
+
+export function getDateOrdinal(
+  dateOfMonth: number,
+  locale?: Intl.UnicodeBCP47LocaleIdentifier,
+): string;
+export function getDateOrdinal(
+  date: Date,
+  locale?: Intl.UnicodeBCP47LocaleIdentifier,
+): string;
+export function getDateOrdinal(
+  date: Date | number,
+  locale: Intl.UnicodeBCP47LocaleIdentifier = "en-US",
+): string {
+  const ordinalPlurals = new Intl.PluralRules(locale, { type: "ordinal" });
+
+  const d = typeof date === "number" ? date : date.getDate();
+  return `${d}${ordinalSuffixes[ordinalPlurals.select(d)]}`;
 }
 
 export function isToday(

@@ -34,14 +34,19 @@ const Calendar = forwardRef<CalendarHandles, CalendarProps>((_props, ref) => {
       className="calendar"
     >
       <CalendarNavigation
-        month={calendar.cursor.getMonth()}
-        year={calendar.cursor.getFullYear()}
+        date={calendar.cursor}
+        onClickNextDay={calendar.nextDay}
+        onClickPrevDay={calendar.prevDay}
         onClickNextMonth={calendar.nextMonth}
         onClickNextYear={calendar.nextYear}
         onClickPrevMonth={calendar.prevMonth}
         onClickPrevYear={calendar.prevYear}
       />
-      <CalendarSidebar date={calendar.cursor} />
+      <CalendarSidebar
+        date={calendar.cursor}
+        nextDay={calendar.nextDay}
+        prevDay={calendar.prevDay}
+      />
       <StyledCalendarDaysFrame frameColor={accentColor}>
         <StyledCalendarDays
           borderColor={accentColor}
