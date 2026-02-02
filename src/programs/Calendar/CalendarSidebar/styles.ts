@@ -3,7 +3,18 @@ import styled from "@emotion/styled";
 interface StyledCalendarSidebarProps {}
 export const StyledCalendarSidebar = styled.div<StyledCalendarSidebarProps>`
   width: 100%;
-  max-width: 300px;
   height: 100%;
   grid-area: side;
+  overflow: auto;
+  padding-left: 6px;
+  box-sizing: border-box;
+`;
+
+interface StyledDayBreakProps {
+  color: string;
+}
+export const StyledDayBreak = styled.hr<StyledDayBreakProps>`
+  width: 100%;
+  margin: 0;
+  background-color: ${(p) => p.color};
 `;

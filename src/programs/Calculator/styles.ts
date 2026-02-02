@@ -12,7 +12,7 @@ export const StyledCalc = styled.div`
   /* padding: 5px; */
   border-radius: 10px;
   box-sizing: border-box;
-  gap: 10px;
+  gap: 5px;
 `;
 
 export const StyledInputOutput = styled.div<{
@@ -38,6 +38,7 @@ export const StyledInputOutputContents = styled.div`
   text-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5);
   overflow-x: auto;
   width: 100%;
+  text-align: end;
 `;
 
 export const StyledButtons = styled.div`
