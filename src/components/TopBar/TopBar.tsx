@@ -13,10 +13,15 @@ interface TopBarProps {}
 
 // eslint-disable-next-line no-empty-pattern
 function TopBar({}: TopBarProps) {
-  const settings = useSystemSettings();
+  const { mainColor, opacity, blur } = useSystemSettings();
   return (
     <StyledTopBarContainer id="top-bar__container">
-      <StyledTopBar id="top-bar" backgroundColor={settings.mainColor}>
+      <StyledTopBar
+        id="top-bar"
+        backgroundColor={mainColor}
+        opacity={opacity}
+        blur={blur}
+      >
         <StyledTopBarContents id="top-bar__contents">
           <FocusedWindowMenu />
           <ClockMenu />

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Dimensions, Position } from "../../hooks/useDragToResize";
+import { transparentize } from "polished";
 
 interface StyledBorderedAppProps {
   initialDimensions: Dimensions;
@@ -7,6 +8,8 @@ interface StyledBorderedAppProps {
   zIndex: number | undefined;
   backgroundColor: string;
   display: "none" | "grid";
+  opacity: number;
+  blur: number;
 }
 
 export const StyledBorderedApp = styled.div<StyledBorderedAppProps>`
@@ -26,7 +29,9 @@ export const StyledBorderedApp = styled.div<StyledBorderedAppProps>`
   width: ${(props) => props.initialDimensions.width}px;
   height: ${(props) => props.initialDimensions.height}px;
   z-index: ${(props) => props.zIndex};
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) =>
+    transparentize(props.opacity, props.backgroundColor)};
+  backdrop-filter: ${(props) => props.blur && `blur(${props.blur}px)`};
   display: ${(props) => props.display};
   left: ${(props) => props.initialPosition.x}px;
   top: ${(props) => props.initialPosition.y}px;

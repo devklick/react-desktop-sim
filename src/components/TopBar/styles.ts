@@ -10,15 +10,21 @@ export const StyledTopBarContainer = styled.div`
   box-sizing: border-box;
 `;
 
-export const StyledTopBar = styled.div<{ backgroundColor: string }>`
+interface StyledTopBarProps {
+  backgroundColor: string;
+  opacity: number;
+  blur: number;
+}
+export const StyledTopBar = styled.div<StyledTopBarProps>`
   height: 100%;
   width: 100%;
   border-radius: 15px;
   box-shadow:
     0 -2px 10px 1px #11172b,
     0 -2px 3px #bebebe inset;
-  background-color: ${(props) => transparentize(0.5, props.backgroundColor)};
-  backdrop-filter: blur(5px);
+  background-color: ${(props) =>
+    transparentize(props.opacity, props.backgroundColor)};
+  backdrop-filter: ${(props) => props.blur && `blur(${props.blur}px)`};
 `;
 
 export const StyledTopBarContents = styled.div`

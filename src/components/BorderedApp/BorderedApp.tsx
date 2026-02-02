@@ -72,7 +72,7 @@ function BorderedApp<
   contentRef,
 }: React.PropsWithChildren<BorderedAppProps<T, E>>) {
   const winMan = useWindowManagerStore();
-  const settings = useSystemSettings();
+  const { mainColor, blur, opacity } = useSystemSettings();
 
   // Listen for keyDown events and send them down to the content rendered inside the bordered app
   const handleKeyDown = (e: KeyboardEvent) =>
@@ -122,10 +122,12 @@ function BorderedApp<
       initialDimensions={initialDimensions}
       initialPosition={initialPosition}
       zIndex={zIndex}
-      backgroundColor={settings.mainColor}
+      backgroundColor={mainColor}
       display={hidden === true ? "none" : "grid"}
       tabIndex={0}
       onKeyDown={handleKeyDown}
+      opacity={opacity}
+      blur={blur}
     >
       <StyledCorner location="nw" ref={resizeHandleNW} />
       <StyledEdge location="n" ref={resizeHandleN} />

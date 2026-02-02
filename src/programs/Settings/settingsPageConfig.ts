@@ -13,6 +13,26 @@ export function getPages(
       name: "Appearance",
       sections: [
         {
+          title: "Transparency",
+          description:
+            "Configure how how transparent you want the UI elements to be",
+          type: "range",
+          currentValue: systemsSettings.opacity,
+          min: 0,
+          max: 1,
+          onValueChanged: (value) => systemsSettings.setOpacity(Number(value)),
+        },
+        {
+          title: "Blur",
+          description:
+            "Configure the blur that should be applied when transparency is being used",
+          type: "range",
+          currentValue: systemsSettings.blur,
+          min: 0,
+          max: 20,
+          onValueChanged: (value) => systemsSettings.setBlur(Number(value)),
+        },
+        {
           title: "Background",
           description:
             "Provide a URL for a background image that you would like to use",

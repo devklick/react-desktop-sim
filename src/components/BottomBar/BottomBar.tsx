@@ -12,10 +12,15 @@ interface BottomBarProps {}
 
 // eslint-disable-next-line no-empty-pattern
 function BottomBar({}: BottomBarProps) {
-  const settings = useSystemSettings();
+  const { mainColor, opacity, blur } = useSystemSettings();
   return (
     <StyledContainer id="bottom-bar__container">
-      <StyledBottomBar id="bottom-bar" backgroundColor={settings.mainColor}>
+      <StyledBottomBar
+        id="bottom-bar"
+        backgroundColor={mainColor}
+        opacity={opacity}
+        blur={blur}
+      >
         <StyledContents id="bottom-bar__contents">
           <TextEditorLauncher />
           <CalculatorLauncher />

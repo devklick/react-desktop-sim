@@ -15,14 +15,21 @@ import {
 } from "./styles";
 import Button from "../../components/Button";
 
+type SettingType = Extract<
+  HTMLInputTypeAttribute,
+  "color" | "url" | "button" | "text" | "range"
+>;
+
 interface SettingsSectionProps {
   title: string;
   description: string;
-  type: string;
+  type: SettingType;
   currentValue: unknown;
   validValues?: Array<unknown>;
   valueValidation?: (value: string) => string | undefined;
   onValueChanged: (value: string) => void;
+  min?: number;
+  max?: number;
 }
 
 function SettingsSection(section: SettingsSectionProps) {
@@ -36,7 +43,7 @@ function SettingsSection(section: SettingsSectionProps) {
     s.fontColor,
     s.errorColor,
   ]);
-  function getInputType(type: string): HTMLInputTypeAttribute {
+  function getInputType(type: SettingType): HTMLInputTypeAttribute {
     switch (type) {
       case "color":
         return "color";
@@ -44,6 +51,8 @@ function SettingsSection(section: SettingsSectionProps) {
         return "url";
       case "button":
         return "button";
+      case "range":
+        return "range";
       default:
         return "text";
     }
@@ -86,6 +95,9 @@ function SettingsSection(section: SettingsSectionProps) {
         type={getInputType(section.type)}
         value={String(value)}
         onChange={handleChange}
+        min={section.min}
+        max={section.max}
+        step={0.1}
       />
     );
   }

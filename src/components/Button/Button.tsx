@@ -1,5 +1,6 @@
 import { forwardRef, PropsWithChildren, useCallback } from "react";
 import { StyledButton, StyledButtonProps } from "./styles";
+import { setRef } from "../../common/utils/htmlHelpers";
 
 interface ButtonProps extends StyledButtonProps {
   onClick?: () => void;
@@ -9,13 +10,7 @@ interface ButtonProps extends StyledButtonProps {
 const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
   ({ onClick, children, ...rest }, ref) => {
     const onRef = useCallback(
-      (el: HTMLButtonElement | null) => {
-        if (typeof ref === "function") {
-          ref(el);
-        } else if (ref != null) {
-          ref.current = el;
-        }
-      },
+      (el: HTMLButtonElement | null) => setRef(ref, el),
       [ref],
     );
     return (

@@ -1,3 +1,4 @@
+import { adjustLuminance } from "../../common/utils/colorUtils";
 import useSystemSettings from "../../stores/systemSettingsStore";
 import Button from "../Button";
 import { StyledItemContainer, StyledSideBar } from "./styles";
@@ -27,7 +28,9 @@ function AppSideBar({ items }: AppSideBarProps) {
             group="vertical"
             onClick={item.onClick}
             color={fontColor}
-            backgroundColor={buttonColor}
+            backgroundColor={"transparent"}
+            backgroundColorHover={adjustLuminance(0.1, buttonColor)}
+            backgroundColorActive={adjustLuminance(0.2, buttonColor)}
             active={item.isActive ?? false}
             justifyContent="start"
             key={item.title}

@@ -15,14 +15,20 @@ export const StyledContainer = styled.div`
   align-items: center;
 `;
 
-export const StyledBottomBar = styled.div<{ backgroundColor: string }>`
+interface StyledBottomBarProps {
+  backgroundColor: string;
+  opacity: number;
+  blur: number;
+}
+export const StyledBottomBar = styled.div<StyledBottomBarProps>`
   height: 100%;
   width: 100%;
   display: flex;
   background-color: var(--ui-color-primary);
   border-radius: 50px;
-  background-color: ${(props) => transparentize(0.5, props.backgroundColor)};
-  backdrop-filter: blur(5px);
+  background-color: ${(props) =>
+    transparentize(props.opacity, props.backgroundColor)};
+  backdrop-filter: ${(props) => props.blur && `blur(${props.blur}px)`};
   box-shadow:
     0 -2px 10px 1px #11172b,
     0 -2px 3px #bebebe inset;

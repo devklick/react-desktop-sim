@@ -21,6 +21,8 @@ const defaultTheme: Theme = {
   warningColor: "#ebcb8b",
   successColor: "#a3be8c",
   background: "https://regolith-linux.org/images/releases/nord-dark.png",
+  opacity: 0.5,
+  blur: 5,
 };
 
 export interface SystemSettingState {
@@ -33,12 +35,16 @@ export interface SystemSettingState {
   fontColor: string;
   iconColor: string;
   background: string;
+  opacity: number;
+  blur: number;
   setMainColor: (color: string) => void;
   setSecondaryColor: (color: string) => void;
   setFontColor: (color: string) => void;
   setIconColor: (color: string) => void;
   setBackground: (url: string) => void;
   restoreDefaultTheme: () => void;
+  setOpacity: (opacity: number) => void;
+  setBlur: (blur: number) => void;
 }
 
 export const useSystemSettings = create<SystemSettingState>()(
@@ -62,6 +68,12 @@ export const useSystemSettings = create<SystemSettingState>()(
       },
       restoreDefaultTheme() {
         set({ ...defaultTheme });
+      },
+      setBlur(blur) {
+        set({ blur });
+      },
+      setOpacity(opacity) {
+        set({ opacity });
       },
     }),
     {
