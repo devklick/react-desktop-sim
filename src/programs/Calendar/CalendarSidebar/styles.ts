@@ -5,7 +5,8 @@ export const StyledCalendarSidebar = styled.div<StyledCalendarSidebarProps>`
   width: 100%;
   height: 100%;
   grid-area: side;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden; // getting a tiny amount of overflow, I think because of flex gap's sub-pixel rounding
   padding-left: 6px;
   box-sizing: border-box;
 `;
