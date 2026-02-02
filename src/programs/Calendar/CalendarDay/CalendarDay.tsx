@@ -19,7 +19,6 @@ export default function CalendarDay({
 }: CalendarDayProps) {
   const [mainColor, fontColor, primaryColor] = useSystemSettings((s) => [
     s.mainColor,
-    s.secondaryColor,
     s.fontColor,
     s.primaryColor,
   ]);

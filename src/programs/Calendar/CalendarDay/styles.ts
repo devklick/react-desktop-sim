@@ -15,8 +15,6 @@ export const StyledCalendarDay = styled.div<StyledCalendarDayProps>`
   flex-direction: column;
   background-color: ${(props) =>
     props.isSelected ? props.outlineColor : props.backgroundColor};
-  /* border: ${(p) =>
-    p.isSelected ? `1px solid ${p.outlineColor}` : undefined}; */
   color: ${(props) =>
     props.currentMonth
       ? undefined
@@ -26,9 +24,11 @@ export const StyledCalendarDay = styled.div<StyledCalendarDayProps>`
   transition: background-color 0.3s;
   :hover {
     background-color: ${(props) =>
-      isLight(props.backgroundColor)
-        ? darken(0.1, props.backgroundColor)
-        : lighten(0.1, props.backgroundColor)};
+      props.isSelected
+        ? props.outlineColor
+        : isLight(props.backgroundColor)
+          ? darken(0.1, props.backgroundColor)
+          : lighten(0.1, props.backgroundColor)};
   }
 `;
 
