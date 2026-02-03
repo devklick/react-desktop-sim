@@ -1,4 +1,6 @@
 import React, { KeyboardEvent, RefObject, useCallback, useRef } from "react";
+import { darken } from "polished";
+
 import useWindowManagerStore, {
   BaseProps,
 } from "../../stores/windowManagerStore";
@@ -189,7 +191,10 @@ function BorderedApp<
         </StyledWindowButtonsWrapper>
       </StyledTitleBar>
       <StyledContent className="bordered-app__content">
-        <StyledContentInner className="bordered-app__content-inner">
+        <StyledContentInner
+          className="bordered-app__content-inner"
+          shadowColor={darken(0.1, mainColor)}
+        >
           {children}
         </StyledContentInner>
       </StyledContent>

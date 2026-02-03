@@ -24,7 +24,7 @@ export const StyledBorderedApp = styled.div<StyledBorderedAppProps>`
   border-radius: 10px;
   box-shadow:
     0px -2px 10px 1px rgb(0, 0, 0, 0.4),
-    0 -0.5px 1px #8d8d8d inset;
+    0px 0px 3px rgb(141, 141, 141, 0.5) inset;
   position: fixed;
   width: ${(props) => props.initialDimensions.width}px;
   height: ${(props) => props.initialDimensions.height}px;
@@ -156,10 +156,14 @@ export const StyledContent = styled.div`
   padding-top: 0;
 `;
 
-export const StyledContentInner = styled.div`
+interface StyledContentInnerProps {
+  shadowColor: string;
+}
+export const StyledContentInner = styled.div<StyledContentInnerProps>`
   width: 100%;
   height: 100%;
-  box-shadow: 0px 0px 4px rgb(0, 0, 0, 0.5) inset;
+  box-shadow: 0px 0px 4px ${(p) => p.shadowColor} inset;
+
   overflow: hidden;
   border-radius: 10px;
   box-sizing: border-box;
