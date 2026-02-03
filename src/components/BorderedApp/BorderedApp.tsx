@@ -22,6 +22,7 @@ import {
   StyledWindowMenusWrapper,
   StyledContentInner,
 } from "./styles";
+import { toKebabCase } from "../../common/utils/stringUtils";
 
 /**
  * A type for each of the programs wrapped in a bordered app to forward a ref for,
@@ -128,13 +129,30 @@ function BorderedApp<
       onKeyDown={handleKeyDown}
       opacity={opacity}
       blur={blur}
+      className={`bordered-app bordered-app_${toKebabCase(title)}`}
     >
-      <StyledCorner location="nw" ref={resizeHandleNW} />
-      <StyledEdge location="n" ref={resizeHandleN} />
-      <StyledCorner location="ne" ref={resizeHandleNE} />
-      <StyledEdge location="e" ref={resizeHandleE} />
+      <StyledCorner
+        location="nw"
+        ref={resizeHandleNW}
+        className="bordered-app__corner--nw"
+      />
+      <StyledEdge
+        location="n"
+        ref={resizeHandleN}
+        className="bordered-app__edge--n"
+      />
+      <StyledCorner
+        location="ne"
+        ref={resizeHandleNE}
+        className="bordered-app__corner--ne"
+      />
+      <StyledEdge
+        location="e"
+        ref={resizeHandleE}
+        className="bordered-app__edge--e"
+      />
       <StyledTitleBar
-        className="drag-to-move"
+        className="bordered-app__title-bar drag-to-move"
         ref={moveHandle}
         onDoubleClick={maximize}
       >
@@ -175,10 +193,26 @@ function BorderedApp<
           {children}
         </StyledContentInner>
       </StyledContent>
-      <StyledCorner location="sw" ref={resizeHandleSW} />
-      <StyledEdge location="s" ref={resizeHandleS} />
-      <StyledCorner location="se" ref={resizeHandleSE} />
-      <StyledEdge location="w" ref={resizeHandleW} />
+      <StyledCorner
+        location="sw"
+        ref={resizeHandleSW}
+        className="bordered-app__corner--sw"
+      />
+      <StyledEdge
+        location="s"
+        ref={resizeHandleS}
+        className="bordered-app__edge--s"
+      />
+      <StyledCorner
+        location="se"
+        ref={resizeHandleSE}
+        className="bordered-app__corner--se"
+      />
+      <StyledEdge
+        location="w"
+        ref={resizeHandleW}
+        className="bordered-app__edge--w"
+      />
     </StyledBorderedApp>
   );
 }

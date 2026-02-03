@@ -16,13 +16,14 @@ interface ComponentDefinition<Props extends BaseProps = BaseProps> {
 
 interface WindowManagerStoreState {
   contentRef: React.RefObject<HTMLDivElement>;
+  desktopRef: React.RefObject<HTMLDivElement>;
   windowsMap: Map<string, Map<string, ComponentDefinition>>;
   highestZIndex: number;
   getWindowDefinitions: () => Array<ComponentDefinition>;
   addWindow: <Props extends BaseProps = BaseProps>(
     windowType: string,
     windowId: string,
-    definition: ComponentDefinition<Props>
+    definition: ComponentDefinition<Props>,
   ) => void;
   closeWindow: (windowType: string, windowId: string) => void;
   focusWindowsOfType: (windowType: string) => void;
@@ -33,17 +34,18 @@ interface WindowManagerStoreState {
 
 const useWindowManagerStore = create<WindowManagerStoreState>()((set, get) => ({
   contentRef: React.createRef<HTMLDivElement>(),
+  desktopRef: React.createRef<HTMLDivElement>(),
   windowsMap: new Map(),
   highestZIndex: 0,
   getWindowDefinitions() {
     return Array.from(get().windowsMap.values()).flatMap((map) =>
-      Array.from(map.values())
+      Array.from(map.values()),
     );
   },
   addWindow<Props extends BaseProps = BaseProps>(
     windowType: string,
     windowId: string,
-    definition: ComponentDefinition<Props>
+    definition: ComponentDefinition<Props>,
   ) {
     const windowsMap = get().windowsMap;
     const windowsOfType = windowsMap.get(windowType);
@@ -54,7 +56,7 @@ const useWindowManagerStore = create<WindowManagerStoreState>()((set, get) => ({
     if (!windowsOfType) {
       windowsMap.set(
         windowType,
-        new Map([[windowId, definition as unknown as ComponentDefinition]])
+        new Map([[windowId, definition as unknown as ComponentDefinition]]),
       );
     } else {
       windowsOfType.set(windowId, definition as unknown as ComponentDefinition);

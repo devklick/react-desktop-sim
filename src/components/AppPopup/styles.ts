@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { Rect } from "../../hooks/useDragToResize";
 
 export const StyledPopup = styled.div<Rect>`
-  backdrop-filter: brightness(80%);
   position: fixed;
   z-index: 9999;
   display: flex;
@@ -12,6 +11,9 @@ export const StyledPopup = styled.div<Rect>`
   left: ${(props) => props.left}px;
   width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
+  backdrop-filter: blur(5px) brightness(80%);
+  border-radius: 6px;
+  box-shadow: 0 0 3px 3px rgb(0, 0, 0, 0.3);
 `;
 
 export const StyledContent = styled.div<{ backgroundColor: string }>`

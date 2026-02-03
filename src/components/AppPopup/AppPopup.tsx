@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Rect } from "../../hooks/useDragToResize";
 import useDetectMouseDownOutside from "../../hooks/useDetectMouseDownOutside";
+
 import useSystemSettings from "../../stores/systemSettingsStore";
+import useWindowManagerStore from "../../stores/windowManagerStore";
 
 import { StyledContent, StyledPopup } from "./styles";
 
@@ -15,6 +18,7 @@ function AppPopup<Element extends HTMLElement>({
   children,
   close,
 }: React.PropsWithChildren<AppPopupProps<Element>>) {
+  const desktopRef = useWindowManagerStore((s) => s.desktopRef);
   const thisRef = useRef<HTMLDivElement>(null);
   const settings = useSystemSettings();
   const [rect, setRect] = useState<Rect>({
@@ -43,7 +47,10 @@ function AppPopup<Element extends HTMLElement>({
     e.preventDefault();
   }
 
-  return (
+  // popup is portalled to desktop element
+  if (!desktopRef.current) return;
+
+  return createPortal(
     <StyledPopup
       {...rect}
       ref={thisRef}
@@ -54,7 +61,8 @@ function AppPopup<Element extends HTMLElement>({
       <StyledContent backgroundColor={settings.mainColor}>
         {children}
       </StyledContent>
-    </StyledPopup>
+    </StyledPopup>,
+    desktopRef.current,
   );
 }
 
