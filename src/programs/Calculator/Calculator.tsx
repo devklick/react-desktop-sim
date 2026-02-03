@@ -132,7 +132,7 @@ const Calculator = forwardRef<CalculatorHandles, CalculatorProps>(
         >
           <StyledInputOutputContents>{input}</StyledInputOutputContents>
         </StyledInputOutput>
-        <StyledInputOutput direction="output">
+        <StyledInputOutput direction="output" scrollbarColor={scrollbarColor}>
           <StyledInputOutputContents>{output}</StyledInputOutputContents>
         </StyledInputOutput>
         <StyledButtons>
