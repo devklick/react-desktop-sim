@@ -18,6 +18,7 @@ export const StyledCalc = styled.div`
 export const StyledInputOutput = styled.div<{
   direction: "input" | "output";
   roundTop?: boolean;
+  scrollbarColor: string;
 }>`
   box-shadow: 0px 0px 4px rgb(0, 0, 0, 0.5) inset;
   font-size: ${(props) => (props.direction === "input" ? 20 : 16)}px;
@@ -32,6 +33,7 @@ export const StyledInputOutput = styled.div<{
   border-top-left-radius: ${(p) => (p.roundTop ? "10px" : 0)};
   border-top-right-radius: ${(p) => (p.roundTop ? "10px" : 0)};
   overflow: hidden;
+  scrollbar-color: ${(p) => p.scrollbarColor} transparent;
 `;
 
 export const StyledInputOutputContents = styled.div`

@@ -9,7 +9,10 @@ interface TextEditorProps {}
 const TextEditor = forwardRef<TextEditorHandles, TextEditorProps>(
   (_props, ref) => {
     const elementRef = useRef<HTMLDivElement>(null);
-    const settings = useSystemSettings();
+    const [selectedTextColor, scrollbarColor] = useSystemSettings((s) => [
+      s.secondaryColor,
+      s.iconColor,
+    ]);
 
     useImperativeHandle(ref, () => ({
       element: elementRef.current,
@@ -18,7 +21,8 @@ const TextEditor = forwardRef<TextEditorHandles, TextEditorProps>(
     return (
       <StyledTextEditor className="text-editor" ref={elementRef}>
         <StyledTextArea
-          selectedColor={settings.secondaryColor}
+          selectedColor={selectedTextColor}
+          scrollbarColor={scrollbarColor}
           className="text-editor__content"
         />
       </StyledTextEditor>

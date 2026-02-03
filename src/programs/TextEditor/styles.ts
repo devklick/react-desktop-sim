@@ -5,7 +5,11 @@ export const StyledTextEditor = styled.div`
   width: 100%;
 `;
 
-export const StyledTextArea = styled.textarea<{ selectedColor: string }>`
+interface StyledTextAreaProps {
+  selectedColor: string;
+  scrollbarColor: string;
+}
+export const StyledTextArea = styled.textarea<StyledTextAreaProps>`
   width: 100%;
   height: 100%;
   border: none;
@@ -17,6 +21,7 @@ export const StyledTextArea = styled.textarea<{ selectedColor: string }>`
   border-radius: 10px;
   padding: 10px;
   box-sizing: border-box;
+  scrollbar-color: ${(p) => p.scrollbarColor} transparent;
 
   &:focus-visible {
     outline: none;

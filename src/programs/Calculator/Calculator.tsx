@@ -15,6 +15,7 @@ import {
   StyledInputOutputContents,
 } from "./styles";
 import { BorderedAppContentHandles } from "../../components/BorderedApp/BorderedApp";
+import useSystemSettings from "../../stores/systemSettingsStore";
 
 export type CalculatorHandles = BorderedAppContentHandles<HTMLDivElement>;
 
@@ -28,6 +29,7 @@ const Calculator = forwardRef<CalculatorHandles, CalculatorProps>(
     const elementRef = useRef<HTMLDivElement>(null);
     const [input, setInput] = useState<string>("");
     const [output, setOutput] = useState<string>("");
+    const [scrollbarColor] = useSystemSettings((s) => [s.iconColor]);
     const appendToInput = (value: string) =>
       setInput((current) => current + value);
     const removeFromEnd = (count: number = 1) =>
@@ -123,7 +125,11 @@ const Calculator = forwardRef<CalculatorHandles, CalculatorProps>(
 
     return (
       <StyledCalc ref={elementRef}>
-        <StyledInputOutput direction="input" roundTop>
+        <StyledInputOutput
+          direction="input"
+          roundTop
+          scrollbarColor={scrollbarColor}
+        >
           <StyledInputOutputContents>{input}</StyledInputOutputContents>
         </StyledInputOutput>
         <StyledInputOutput direction="output">

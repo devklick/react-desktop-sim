@@ -9,8 +9,12 @@ export const StyledSettings = styled.div`
   border-radius: 10px;
 `;
 
-export const StyledPage = styled.div`
+interface StyledPageProps {
+  scrollbarColor: string;
+}
+export const StyledPage = styled.div<StyledPageProps>`
   overflow: auto;
+  scrollbar-color: ${(p) => p.scrollbarColor} transparent;
 `;
 
 export const StyledSections = styled.div`

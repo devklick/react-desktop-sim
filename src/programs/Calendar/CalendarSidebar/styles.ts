@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 
-interface StyledCalendarSidebarProps {}
+interface StyledCalendarSidebarProps {
+  scrollbarColor: string;
+}
 export const StyledCalendarSidebar = styled.div<StyledCalendarSidebarProps>`
   width: 100%;
   height: 100%;
@@ -9,6 +11,7 @@ export const StyledCalendarSidebar = styled.div<StyledCalendarSidebarProps>`
   overflow-x: hidden; // getting a tiny amount of overflow, I think because of flex gap's sub-pixel rounding
   padding-left: 6px;
   box-sizing: border-box;
+  scrollbar-color: ${(p) => p.scrollbarColor} transparent;
 `;
 
 interface StyledDayBreakProps {

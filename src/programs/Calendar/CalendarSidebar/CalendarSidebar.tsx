@@ -13,9 +13,16 @@ interface CalendarSidebarProps {
 // eslint-disable-next-line no-empty-pattern
 export default function CalendarSidebar({}: CalendarSidebarProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [breakColor] = useSystemSettings((s) => [s.secondaryColor]);
+  const [breakColor, scrollbarColor] = useSystemSettings((s) => [
+    s.secondaryColor,
+    s.iconColor,
+  ]);
   return (
-    <StyledCalendarSidebar className="calendar__side-bar" ref={ref}>
+    <StyledCalendarSidebar
+      scrollbarColor={scrollbarColor}
+      className="calendar__side-bar"
+      ref={ref}
+    >
       {Array.from({ length: 25 }).map((_, i) => (
         <>
           <CalendarTimeSlot hour={i} />

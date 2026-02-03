@@ -117,8 +117,9 @@ export interface SettingsPageProps {
 }
 
 function SettingsPage({ sections }: SettingsPageProps) {
+  const [scrollbarColor] = useSystemSettings((s) => [s.iconColor]);
   return (
-    <StyledPage>
+    <StyledPage scrollbarColor={scrollbarColor}>
       <StyledSections>
         {sections.map((section) => (
           <SettingsSection {...section} key={section.title} />

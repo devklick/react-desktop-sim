@@ -32,6 +32,7 @@ function MainContent({
   const clickPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const [contextMenuOpen, setContextMenuOpen] = useState(false);
   const [promptFor, setPromptFor] = useState<FSObjectType | null>(null);
+  const [scrollbarColor] = useSystemSettings((s) => [s.iconColor]);
 
   function handleRightClick(e: React.MouseEvent) {
     clickPosition.current = { x: e.clientX, y: e.clientY };
@@ -55,7 +56,10 @@ function MainContent({
   }
 
   return (
-    <StyledMainContent onContextMenu={handleRightClick}>
+    <StyledMainContent
+      onContextMenu={handleRightClick}
+      scrollbarColor={scrollbarColor}
+    >
       {contextMenuOpen && (
         <ContextMenu
           position={clickPosition.current}
