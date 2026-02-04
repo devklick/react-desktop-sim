@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Dimensions, Position } from "../../hooks/useDragToResize";
-import { transparentize } from "polished";
+import { darken, transparentize } from "polished";
 
 interface StyledBorderedAppProps {
   initialDimensions: Dimensions;
@@ -24,7 +24,7 @@ export const StyledBorderedApp = styled.div<StyledBorderedAppProps>`
   border-radius: 10px;
   box-shadow:
     0px -2px 10px 1px rgb(0, 0, 0, 0.4),
-    0px 0px 3px rgb(141, 141, 141, 0.5) inset;
+    0px 0px 3px ${transparentize(0.5, "#8d8d8d")} inset;
   position: fixed;
   width: ${(props) => props.initialDimensions.width}px;
   height: ${(props) => props.initialDimensions.height}px;
@@ -126,9 +126,11 @@ function getButtonBackgroundColor(type: ButtonType): string {
   }
 }
 
-export const StyledWindowButton = styled.button<{
+interface StyledWindowButtonProps {
   buttonType: ButtonType;
-}>`
+  frameColor: string;
+}
+export const StyledWindowButton = styled.button<StyledWindowButtonProps>`
   border-radius: 20px;
   width: 14px;
   height: 14px;
@@ -137,12 +139,21 @@ export const StyledWindowButton = styled.button<{
   transition: all 0.2s ease;
   background-color: ${(props) => getButtonBackgroundColor(props.buttonType)};
   border: none;
+  box-shadow:
+    inset 0 0 0 0.5px ${(p) => transparentize(0.5, darken(0.1, p.frameColor))},
+    inset 0 1px 2px rgba(255, 255, 255, 0.3),
+    0 1px 5px ${(p) => transparentize(0.5, darken(0.1, p.frameColor))};
+
   &:hover {
     transform: scale(1.2);
     transition: all 0.2s ease;
   }
   &:active {
-    box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5) inset;
+    box-shadow:
+      inset 1px 1px 2px 1px
+        ${(p) => transparentize(0.5, darken(0.1, p.frameColor))},
+      inset 0 1px 2px ${(p) => transparentize(0.5, darken(0.1, p.frameColor))},
+      0 1px 5px ${(p) => transparentize(0.5, darken(0.1, p.frameColor))};
   }
 `;
 

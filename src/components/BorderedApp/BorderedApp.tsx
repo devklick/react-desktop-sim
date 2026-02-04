@@ -178,15 +178,19 @@ function BorderedApp<
             <StyledWindowButton
               buttonType="min"
               onClick={minimize}
-            ></StyledWindowButton>
+              frameColor={mainColor}
+            />
+
             <StyledWindowButton
               buttonType="max"
               onClick={maximize}
-            ></StyledWindowButton>
+              frameColor={mainColor}
+            />
             <StyledWindowButton
               buttonType="close"
               onClick={onClickClose}
-            ></StyledWindowButton>
+              frameColor={mainColor}
+            />
           </StyledWindowButtons>
         </StyledWindowButtonsWrapper>
       </StyledTitleBar>
