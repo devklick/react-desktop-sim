@@ -11,9 +11,15 @@ interface SideBarItem {
 
 interface AppSideBarProps {
   items: Array<SideBarItem>;
+  itemSeparators?: boolean;
+  itemSeparatorColor?: string;
 }
 
-function AppSideBar({ items }: AppSideBarProps) {
+function AppSideBar({
+  items,
+  itemSeparators,
+  itemSeparatorColor,
+}: AppSideBarProps) {
   const [fontColor, buttonColor] = useSystemSettings((s) => [
     s.fontColor,
     s.mainColor,
@@ -34,6 +40,8 @@ function AppSideBar({ items }: AppSideBarProps) {
             active={item.isActive ?? false}
             justifyContent="start"
             key={item.title}
+            separators={itemSeparators}
+            separatorColor={itemSeparatorColor}
           >
             {item.title}
           </Button>

@@ -15,6 +15,7 @@ export const StyledCalendarLayout = styled.div<StyledCalendarLayoutProps>`
     "nav nav nav"
     "days days side"
     "days days side";
+  gap: 6px;
   grid-template-rows: 40px 1fr 1fr;
   grid-template-columns: 1fr 1fr minmax(150px, 1fr);
 `;

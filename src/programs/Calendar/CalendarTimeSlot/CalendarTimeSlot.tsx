@@ -24,12 +24,13 @@ export default function CalendarTimeSlot({ hour }: CalendarTimeSlotProps) {
 
   return (
     <Button
-      borderRadius={0}
-      height={60}
+      height={"12%"}
       backgroundColor={backgroundColor}
       color={fontColor}
       justifyContent="start"
       ref={onRef}
+      group="vertical"
+      separators
     >
       {hour.toString().padStart(2, "0")}:00
     </Button>

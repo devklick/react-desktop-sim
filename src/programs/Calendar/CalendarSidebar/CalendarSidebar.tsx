@@ -1,7 +1,7 @@
 // import useCalendarEvents from "../hooks/useCalendarEvents";
 import { useRef } from "react";
 import CalendarTimeSlot from "../CalendarTimeSlot/CalendarTimeSlot";
-import { StyledCalendarSidebar, StyledDayBreak } from "./styles";
+import { StyledCalendarSidebar } from "./styles";
 import useSystemSettings from "../../../stores/systemSettingsStore";
 
 interface CalendarSidebarProps {
@@ -13,10 +13,7 @@ interface CalendarSidebarProps {
 // eslint-disable-next-line no-empty-pattern
 export default function CalendarSidebar({}: CalendarSidebarProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [breakColor, scrollbarColor] = useSystemSettings((s) => [
-    s.secondaryColor,
-    s.iconColor,
-  ]);
+  const [scrollbarColor] = useSystemSettings((s) => [s.iconColor]);
   return (
     <StyledCalendarSidebar
       scrollbarColor={scrollbarColor}
@@ -26,7 +23,6 @@ export default function CalendarSidebar({}: CalendarSidebarProps) {
       {Array.from({ length: 25 }).map((_, i) => (
         <>
           <CalendarTimeSlot hour={i} />
-          {i < 24 && <StyledDayBreak color={breakColor} />}
         </>
       ))}
     </StyledCalendarSidebar>

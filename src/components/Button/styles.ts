@@ -18,6 +18,8 @@ export interface StyledButtonProps {
   group?: "horizontal" | "vertical";
   padding?: CSSObject["padding"];
   justifyContent?: CSSProperties["justifyContent"];
+  separators?: boolean;
+  separatorColor?: string;
 }
 
 export const StyledButton = styled.button<StyledButtonProps>`
@@ -30,7 +32,8 @@ function buildStyledButton({
   justifyContent = "center",
   ...props
 }: StyledButtonProps): CSSObject {
-  return {
+  const styles: CSSObject = {
+    position: "relative",
     ...props,
     width: typeof width === "string" ? width : `${width}px`,
     height:
@@ -54,6 +57,31 @@ function buildStyledButton({
     },
     ...radiusStyles({ borderRadius, group: props.group }), // this breaks the return type somehow. Something funky when spreading the emotion type
   } as CSSObject;
+
+  if (props.group && props.separators) {
+    let width: string;
+    let height: string;
+    switch (props.group) {
+      case "horizontal":
+        width = "1px";
+        height = "100%";
+        break;
+      case "vertical":
+        width = "100%";
+        height = "1px";
+        break;
+    }
+    styles["&:not(:first-of-type)::before"] = {
+      content: "''",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width,
+      height,
+      background: props.separatorColor ?? props.color,
+    };
+  }
+  return styles;
 }
 
 function getBackgroundColorActive(props: StyledButtonProps) {

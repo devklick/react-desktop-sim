@@ -9,16 +9,8 @@ export const StyledCalendarSidebar = styled.div<StyledCalendarSidebarProps>`
   grid-area: side;
   overflow-y: auto;
   overflow-x: hidden; // getting a tiny amount of overflow, I think because of flex gap's sub-pixel rounding
-  padding-left: 6px;
+  /* padding-left: 6px; */
   box-sizing: border-box;
   scrollbar-color: ${(p) => p.scrollbarColor} transparent;
-`;
-
-interface StyledDayBreakProps {
-  color: string;
-}
-export const StyledDayBreak = styled.hr<StyledDayBreakProps>`
-  width: 100%;
-  margin: 0;
-  background-color: ${(p) => p.color};
+  border-radius: 10px;
 `;

@@ -62,6 +62,7 @@ function TopBar({
           color={fontColor}
           group="horizontal"
           borderRadius={6}
+          separators
         >
           {"<"}
         </Button>
@@ -73,6 +74,7 @@ function TopBar({
           color={fontColor}
           group="horizontal"
           borderRadius={6}
+          separators
         >
           {">"}
         </Button>
@@ -129,6 +131,7 @@ const FileBrowser = forwardRef<FileBrowserHandles, FileBrowserProps>(
         />
 
         <AppSideBar
+          itemSeparators
           items={fs.favorites.map((fav) => ({
             title: fs.getNameFromPath(fav) ?? "",
             isActive: fav === fs.currentDirectory.path,
