@@ -7,8 +7,6 @@ import {
 } from "react";
 
 import {
-  StyledButton,
-  StyledButtonContent,
   StyledButtons,
   StyledCalc,
   StyledInputOutput,
@@ -16,6 +14,7 @@ import {
 } from "./styles";
 import { BorderedAppContentHandles } from "../../components/BorderedApp/BorderedApp";
 import useSystemSettings from "../../stores/systemSettingsStore";
+import CommonButton from "../../components/Button";
 
 export type CalculatorHandles = BorderedAppContentHandles<HTMLDivElement>;
 
@@ -29,7 +28,13 @@ const Calculator = forwardRef<CalculatorHandles, CalculatorProps>(
     const elementRef = useRef<HTMLDivElement>(null);
     const [input, setInput] = useState<string>("");
     const [output, setOutput] = useState<string>("");
-    const [scrollbarColor] = useSystemSettings((s) => [s.iconColor]);
+    const [scrollbarColor, buttonColor, fontColor, primaryButtonColor] =
+      useSystemSettings((s) => [
+        s.iconColor,
+        s.secondaryColor,
+        s.fontColor,
+        s.primaryColor,
+      ]);
     const appendToInput = (value: string) =>
       setInput((current) => current + value);
     const removeFromEnd = (count: number = 1) =>
@@ -117,9 +122,18 @@ const Calculator = forwardRef<CalculatorHandles, CalculatorProps>(
       }
 
       return (
-        <StyledButton onClick={handleClick}>
-          <StyledButtonContent>{displayChar}</StyledButtonContent>
-        </StyledButton>
+        <CommonButton
+          onClick={handleClick}
+          width={"100%"}
+          height={"100%"}
+          borderRadius={12}
+          backgroundColor={
+            displayChar === "=" ? primaryButtonColor : buttonColor
+          }
+          color={fontColor}
+        >
+          {displayChar}
+        </CommonButton>
       );
     }
 

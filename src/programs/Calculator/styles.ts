@@ -50,34 +50,8 @@ export const StyledButtons = styled.div`
   height: 100%;
   justify-self: center;
   display: grid;
+  gap: 4px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   box-sizing: border-box;
 `;
-
-export const StyledButton = styled.button`
-  text-align: center;
-  cursor: default;
-  border-radius: 20px;
-  justify-self: center;
-  width: 80%;
-  height: 80%;
-  box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5);
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: inherit;
-  color: inherit;
-  border: none;
-
-  &:hover {
-    backdrop-filter: brightness(150%);
-    transition: ease-in 0.2s;
-  }
-  &:active {
-    box-shadow: 2px 2px 4px rgb(0, 0, 0, 0.5) inset;
-  }
-`;
-
-export const StyledButtonContent = styled.span``;
