@@ -55,6 +55,12 @@ function DirectoryOrFile({
     event.preventDefault();
   }
 
+  function handleKeyDown(event: React.KeyboardEvent) {
+    if (event.key === "Enter") {
+      openFSObject(fsObject);
+    }
+  }
+
   return (
     <StyledItem
       selected={selected}
@@ -63,6 +69,9 @@ function DirectoryOrFile({
       onClick={handleClick}
       key={fsObject.path}
       onContextMenu={handleRightClick}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      onFocus={() => setSelected(fsObject.path)}
     >
       {contextMenuOpen && (
         <ContextMenu

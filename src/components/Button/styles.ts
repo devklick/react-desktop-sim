@@ -55,6 +55,10 @@ function buildStyledButton({
     ":active": {
       backgroundColor: getBackgroundColorActive(props),
     },
+    ":focus-visible": {
+      backgroundColor: getBackgroundColorHover(props),
+      outline: "none",
+    },
     ...radiusStyles({ borderRadius, group: props.group }), // this breaks the return type somehow. Something funky when spreading the emotion type
   } as CSSObject;
 

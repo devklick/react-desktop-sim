@@ -5,7 +5,7 @@ interface StyledMainContentProps {
 }
 export const StyledMainContent = styled.div<StyledMainContentProps>`
   grid-area: main-content;
-  padding: 20px;
+  padding: 1%;
   width: 100%;
   height: 100%;
   overflow-y: auto;

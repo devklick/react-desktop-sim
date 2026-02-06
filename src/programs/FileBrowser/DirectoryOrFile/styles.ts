@@ -20,6 +20,11 @@ export const StyledItem = styled.div<{
   border-radius: 10px;
   background-color: ${(props) =>
     props.selected ? props.selectedColor : undefined};
+
+  :focus-visible {
+    background-color: ${(p) => p.selectedColor};
+    outline: none;
+  }
 `;
 
 export const StyledItemName = styled.span``;
