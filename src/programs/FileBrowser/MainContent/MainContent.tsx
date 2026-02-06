@@ -28,7 +28,7 @@ function MainContent({
   openFSObject,
   appRef,
 }: MainContentProps) {
-  const [selected, setSelected] = useState<string>("");
+  const [selected, setSelected] = useState<string | null>(null);
   const clickPosition = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const [contextMenuOpen, setContextMenuOpen] = useState(false);
   const [promptFor, setPromptFor] = useState<FSObjectType | null>(null);
@@ -59,6 +59,7 @@ function MainContent({
     <StyledMainContent
       onContextMenu={handleRightClick}
       scrollbarColor={scrollbarColor}
+      onClick={() => setSelected(null)}
     >
       {contextMenuOpen && (
         <ContextMenu

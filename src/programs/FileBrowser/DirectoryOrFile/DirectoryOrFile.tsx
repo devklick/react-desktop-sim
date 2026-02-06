@@ -49,12 +49,18 @@ function DirectoryOrFile({
     setContextMenuOpen(true);
   }
 
+  function handleClick(event: React.MouseEvent) {
+    setSelected(fsObject.path);
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
   return (
     <StyledItem
       selected={selected}
       selectedColor={settings.secondaryColor}
       onDoubleClick={() => openFSObject(fsObject)}
-      onClick={() => setSelected(fsObject.path)}
+      onClick={handleClick}
       key={fsObject.path}
       onContextMenu={handleRightClick}
     >
