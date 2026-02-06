@@ -14,7 +14,7 @@ export default function CalendarTimeSlot({ hour }: CalendarTimeSlotProps) {
   ]);
 
   const onRef = useCallback(
-    (el: null | HTMLButtonElement) => {
+    (el: null | HTMLDivElement) => {
       if (el && hour === currentHour.current) {
         el.scrollIntoView();
       }
