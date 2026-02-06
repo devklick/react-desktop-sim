@@ -21,8 +21,8 @@ const defaultTheme: Theme = {
   warningColor: "#ebcb8b",
   successColor: "#a3be8c",
   background: "https://regolith-linux.org/images/releases/nord-dark.png",
-  opacity: 0.5,
-  blur: 5,
+  opacity: 0.1,
+  blur: 3,
 };
 
 export interface SystemSettingState {

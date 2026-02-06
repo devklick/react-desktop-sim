@@ -97,15 +97,16 @@ export function isFSFile(fsObject: FSObject): fsObject is FSFile {
 
 export interface LocalFSState {
   root: FSObject;
+  separator: string;
   getDirectory: (path: string) => FSDirectory | null;
   createDirectory: (
     name: string,
-    parentDirectory: FSDirectory
+    parentDirectory: FSDirectory,
   ) => FSDirectory | null;
   createFile: (
     name: string,
     parentDirectory: FSDirectory,
-    contents?: string
+    contents?: string,
   ) => FSFile | null;
   favorites: Array<string>;
   validateFSObjectName: (name: string) => string | null;
@@ -113,12 +114,12 @@ export interface LocalFSState {
   create: (
     type: FSObjectType,
     name: string,
-    parentDirectory: FSDirectory
+    parentDirectory: FSDirectory,
   ) => FSObject | null;
   rename: (
     parentDirectory: FSDirectory,
     fsObject: FSObject,
-    newName: string
+    newName: string,
   ) => void;
   delete: (parentDirectory: FSDirectory, fsObject: FSObject) => void;
   getParentDirectory: (path: string) => FSDirectory | null;
@@ -149,7 +150,7 @@ export const useLocalFS = create<LocalFSState>()(
 
       const createDirectory: LocalFSState["createDirectory"] = (
         name,
-        parentDirectory
+        parentDirectory,
       ) => {
         if (parentDirectory.contents[name]) return null;
 
@@ -173,7 +174,7 @@ export const useLocalFS = create<LocalFSState>()(
       const createFile: LocalFSState["createFile"] = (
         name,
         parentDirectory,
-        contents
+        contents,
       ) => {
         if (parentDirectory.contents[name]) {
           return null;
@@ -198,7 +199,7 @@ export const useLocalFS = create<LocalFSState>()(
       };
 
       const validateFSObjectName: LocalFSState["validateFSObjectName"] = (
-        name
+        name,
       ) => {
         if (!name) {
           return "A value is required";
@@ -221,7 +222,7 @@ export const useLocalFS = create<LocalFSState>()(
 
       const fsObjectNameIsAvailable: LocalFSState["fsObjectNameIsAvailable"] = (
         name,
-        directory
+        directory,
       ) => {
         return !directory.contents[name];
       };
@@ -262,7 +263,7 @@ export const useLocalFS = create<LocalFSState>()(
 
       const deleteFSObject: LocalFSState["delete"] = (
         parentDirectory,
-        fsObject
+        fsObject,
       ) => {
         delete parentDirectory.contents[fsObject.name];
         get().removeFromFavorites(fsObject.path);
@@ -272,7 +273,7 @@ export const useLocalFS = create<LocalFSState>()(
       const rename: LocalFSState["rename"] = (
         parentDirectory,
         fsObject,
-        newName
+        newName,
       ) => {
         const oldName = fsObject.name;
         const oldPath = fsObject.path;
@@ -326,7 +327,7 @@ export const useLocalFS = create<LocalFSState>()(
         set({ favorites });
       };
       const removeFromFavorites: LocalFSState["removeFromFavorites"] = (
-        path
+        path,
       ) => {
         const oldFavorites = get().favorites;
         const favorites = [...oldFavorites];
@@ -338,6 +339,7 @@ export const useLocalFS = create<LocalFSState>()(
       };
       return {
         root: rootDir,
+        separator: pathSeparator,
         favorites: [
           userDir.path,
           documentsDir.path,
@@ -362,8 +364,13 @@ export const useLocalFS = create<LocalFSState>()(
     },
     {
       name: "local-fs",
-    }
-  )
+      partialize: (state) => {
+        const updated = { ...state } as Partial<LocalFSState>;
+        delete updated.separator;
+        return updated;
+      },
+    },
+  ),
 );
 
 export default useLocalFS;

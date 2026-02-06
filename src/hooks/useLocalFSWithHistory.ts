@@ -4,6 +4,7 @@ import useLocalFS, {
   FSObject,
   isFSDirectory,
 } from "../stores/localFS";
+import { trimEnd } from "../common/utils/stringUtils";
 
 function useLocalFSWithHistory(currentPath: string) {
   const history = useRef<string[]>([currentPath]);
@@ -14,7 +15,7 @@ function useLocalFSWithHistory(currentPath: string) {
   );
 
   function getDirOrDefault(path: string, defaultValue = "/home/user") {
-    let dir = fs.getDirectory(path);
+    let dir = fs.getDirectory(trimEnd(path, fs.separator));
     if (!dir) {
       // TODO: Some kind of user notification
       console.warn("Invalid path");

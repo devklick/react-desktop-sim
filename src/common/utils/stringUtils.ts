@@ -7,3 +7,23 @@ export function toKebabCase(str: string) {
     .replace(/^-+|-+$/g, "") // trim leading/trailing -
     .toLowerCase();
 }
+
+export function trimStart(input: string, trim: string): string {
+  if (!trim) return input;
+
+  while (input.startsWith(trim)) {
+    input = input.slice(trim.length);
+  }
+
+  return input;
+}
+
+export function trimEnd(input: string, trim: string): string {
+  if (!trim) return input;
+
+  while (input.endsWith(trim)) {
+    input = input.slice(0, -trim.length);
+  }
+
+  return input;
+}
