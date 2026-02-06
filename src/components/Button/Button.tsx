@@ -1,17 +1,23 @@
-import { forwardRef, PropsWithChildren, useCallback } from "react";
+import {
+  forwardRef,
+  HTMLAttributes,
+  PropsWithChildren,
+  useCallback,
+} from "react";
 import { StyledButton, StyledButtonProps } from "./styles";
 import { setRef } from "../../common/utils/htmlHelpers";
 import { adjustLuminance } from "../../common/utils/colorUtils";
 
-interface ButtonProps extends StyledButtonProps {
+interface ButtonProps
+  extends StyledButtonProps, HTMLAttributes<HTMLDivElement> {
   onClick?: () => void;
   disabled?: boolean;
 }
 
-const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
+const Button = forwardRef<HTMLDivElement, PropsWithChildren<ButtonProps>>(
   ({ onClick, children, ...rest }, ref) => {
     const onRef = useCallback(
-      (el: HTMLButtonElement | null) => setRef(ref, el),
+      (el: HTMLDivElement | null) => setRef(ref, el),
       [ref],
     );
     const separatorColor =
@@ -26,6 +32,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
         onClick={onClick}
         ref={onRef}
         separatorColor={separatorColor}
+        role="button"
       >
         {children}
       </StyledButton>

@@ -50,7 +50,7 @@ export const StyledButtons = styled.div`
   height: 100%;
   justify-self: center;
   display: grid;
-  gap: 4px;
+  gap: 6px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   box-sizing: border-box;

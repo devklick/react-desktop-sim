@@ -22,7 +22,7 @@ export interface StyledButtonProps {
   separatorColor?: string;
 }
 
-export const StyledButton = styled.button<StyledButtonProps>`
+export const StyledButton = styled.div<StyledButtonProps>`
   ${buildStyledButton}
 `;
 
