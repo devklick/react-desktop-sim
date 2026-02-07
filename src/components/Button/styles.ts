@@ -49,6 +49,7 @@ function buildStyledButton({
     display: "flex",
     justifyContent,
     alignItems: "center",
+    boxSizing: "border-box",
     ":hover": {
       backgroundColor: getBackgroundColorHover(props),
     },
