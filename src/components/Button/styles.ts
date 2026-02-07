@@ -30,43 +30,84 @@ function buildStyledButton({
   width = "100%",
   borderRadius = 6,
   justifyContent = "center",
-  ...props
+  active,
+  backgroundColor,
+  backgroundColorActive,
+  backgroundColorHover,
+  color,
+  colorActive,
+  colorHover,
+  disabled,
+  group,
+  height,
+  padding,
+  separatorColor,
+  separators,
 }: StyledButtonProps): CSSObject {
   const styles: CSSObject = {
     position: "relative",
-    ...props,
     width: typeof width === "string" ? width : `${width}px`,
-    height:
-      typeof props.height === "string" ? props.height : `${props.height}px`,
+    height: typeof height === "string" ? height : `${height}px`,
     border: "none",
     transition: "background-color 0.2s, color 0.2s",
     ":disabled": {
       opacity: 0.52,
     },
-    backgroundColor: props.active
-      ? getBackgroundColorActive(props)
-      : props.backgroundColor,
+    padding,
+    backgroundColor: active
+      ? getActiveColor({
+          baseColor: backgroundColor,
+          activeColor: backgroundColorActive,
+          disabled,
+        })
+      : backgroundColor,
     display: "flex",
     justifyContent,
     alignItems: "center",
     boxSizing: "border-box",
     ":hover": {
-      backgroundColor: getBackgroundColorHover(props),
+      backgroundColor: getHoverColor({
+        baseColor: backgroundColor,
+        hoverColor: backgroundColorHover,
+        disabled,
+      }),
+      color: getHoverColor({
+        baseColor: color,
+        hoverColor: colorHover,
+        disabled,
+      }),
     },
     ":active": {
-      backgroundColor: getBackgroundColorActive(props),
+      backgroundColor: getActiveColor({
+        baseColor: backgroundColor,
+        activeColor: backgroundColorActive,
+        disabled,
+      }),
+      color: getActiveColor({
+        baseColor: color,
+        activeColor: colorActive,
+        disabled,
+      }),
     },
     ":focus-visible": {
-      backgroundColor: getBackgroundColorHover(props),
+      backgroundColor: getHoverColor({
+        baseColor: backgroundColor,
+        hoverColor: backgroundColorHover,
+        disabled,
+      }),
       outline: "none",
     },
-    ...radiusStyles({ borderRadius, group: props.group }), // this breaks the return type somehow. Something funky when spreading the emotion type
+    ...radiusStyles({ borderRadius, group }), // this breaks the return type somehow. Something funky when spreading the emotion type
   } as CSSObject;
 
-  if (props.group && props.separators) {
+  if (disabled) {
+    styles.opacity = 0.5;
+  }
+
+  if (group && separators) {
     let width: string;
     let height: string;
-    switch (props.group) {
+    switch (group) {
       case "horizontal":
         width = "1px";
         height = "100%";
@@ -83,29 +124,45 @@ function buildStyledButton({
       left: 0,
       width,
       height,
-      background: props.separatorColor ?? props.color,
+      background: separatorColor ?? color,
     };
   }
   return styles;
 }
 
-function getBackgroundColorActive(props: StyledButtonProps) {
-  if (props.disabled) return undefined;
-  if (props.backgroundColorActive) return props.backgroundColorActive;
-  if (props.backgroundColor) {
-    return isLight(props.backgroundColor)
-      ? darken(0.2, props.backgroundColor)
-      : lighten(0.2, props.backgroundColor);
+function getActiveColor({
+  disabled,
+  activeColor,
+  baseColor,
+}: {
+  disabled?: boolean;
+  activeColor?: string;
+  baseColor?: string;
+}) {
+  if (disabled) return undefined;
+  if (activeColor) return activeColor;
+  if (baseColor) {
+    return isLight(baseColor)
+      ? darken(0.2, baseColor)
+      : lighten(0.2, baseColor);
   }
   return undefined;
 }
-function getBackgroundColorHover(props: StyledButtonProps) {
-  if (props.disabled) return undefined;
-  if (props.backgroundColorHover) return props.backgroundColorHover;
-  if (props.backgroundColor) {
-    return isLight(props.backgroundColor)
-      ? darken(0.1, props.backgroundColor)
-      : lighten(0.1, props.backgroundColor);
+function getHoverColor({
+  disabled,
+  hoverColor,
+  baseColor: baseColor,
+}: {
+  disabled?: boolean;
+  hoverColor?: string;
+  baseColor?: string;
+}) {
+  if (disabled) return undefined;
+  if (hoverColor) return hoverColor;
+  if (baseColor) {
+    return isLight(baseColor)
+      ? darken(0.1, baseColor)
+      : lighten(0.1, baseColor);
   }
   return undefined;
 }
