@@ -3,6 +3,7 @@ import {
   getSpannedDays,
   toLocalISODateString,
 } from "../common/utils/dateUtils";
+import { persist } from "zustand/middleware";
 
 interface CalendarEvent {
   id: string;
@@ -30,79 +31,92 @@ interface CalendarStoreState {
   updateEvent(event: CalendarEvent): void;
 }
 
-export const useCalendarStore = create<CalendarStoreState>()((set, get) => ({
-  events: {},
-  _eventIdsByDay: {},
-  addEvent(event) {
-    set((state) => {
-      const events = { ...state.events };
-      const eventIdsByDay = { ...state._eventIdsByDay };
-      events[event.id] = event;
+export const useCalendarStore = create<CalendarStoreState>()(
+  persist(
+    (set, get) => ({
+      events: {},
+      _eventIdsByDay: {},
+      addEvent(event) {
+        set((state) => {
+          const events = { ...state.events };
+          const eventIdsByDay = { ...state._eventIdsByDay };
+          events[event.id] = event;
 
-      for (const day of getSpannedDays(event.start, event.end)) {
-        const key = toLocalISODateString(day);
-        eventIdsByDay[key] = [...(eventIdsByDay[key] ?? []), event.id];
-      }
+          for (const day of getSpannedDays(event.start, event.end)) {
+            const key = toLocalISODateString(day);
+            eventIdsByDay[key] = [...(eventIdsByDay[key] ?? []), event.id];
+          }
 
-      return { events, _eventIdsByDay: eventIdsByDay };
-    });
-  },
-  removeEvent(id) {
-    set((state) => {
-      if (!state.events[id]) return {};
-      const events = { ...state.events };
-      const event = state.events[id];
-      delete events[id];
+          return { events, _eventIdsByDay: eventIdsByDay };
+        });
+      },
+      removeEvent(id) {
+        set((state) => {
+          if (!state.events[id]) return {};
+          const events = { ...state.events };
+          const event = state.events[id];
+          delete events[id];
 
-      const eventIdsByDay = { ...state._eventIdsByDay };
+          const eventIdsByDay = { ...state._eventIdsByDay };
 
-      for (const day of getSpannedDays(event.start, event.end)) {
-        const key = toLocalISODateString(day);
-        if (!eventIdsByDay[key] || !eventIdsByDay[key].includes(id)) continue;
-        const eventIds = eventIdsByDay[key].filter((eventId) => eventId !== id);
-        eventIdsByDay[key] = eventIds;
+          for (const day of getSpannedDays(event.start, event.end)) {
+            const key = toLocalISODateString(day);
+            if (!eventIdsByDay[key] || !eventIdsByDay[key].includes(id))
+              continue;
+            const eventIds = eventIdsByDay[key].filter(
+              (eventId) => eventId !== id,
+            );
+            eventIdsByDay[key] = eventIds;
 
-        if (!eventIdsByDay[key].length) {
-          delete eventIdsByDay[key];
+            if (!eventIdsByDay[key].length) {
+              delete eventIdsByDay[key];
+            }
+          }
+
+          return { events, _eventIdsByDay: eventIdsByDay };
+        });
+      },
+      updateEvent(event) {
+        if (!get().events[event.id]) {
+          get().addEvent(event);
+          return;
         }
-      }
+        set((state) => {
+          // the updated event may span different days.
+          // we could be smarter/more performant about this, but
+          // lets just be lazy and clear the _eventIdsByDay for
+          // the current range and add them for the new range.
 
-      return { events, _eventIdsByDay: eventIdsByDay };
-    });
-  },
-  updateEvent(event) {
-    if (!get().events[event.id]) {
-      get().addEvent(event);
-      return;
-    }
-    set((state) => {
-      // the updated event may span different days.
-      // we could be smarter/more performant about this, but
-      // lets just be lazy and clear the _eventIdsByDay for
-      // the current range and add them for the new range.
+          const id = event.id;
+          const events = { ...state.events };
+          const eventIdsByDay = { ...state._eventIdsByDay };
+          events[id] = event;
 
-      const id = event.id;
-      const events = { ...state.events };
-      const eventIdsByDay = { ...state._eventIdsByDay };
-      events[id] = event;
+          for (const day of getSpannedDays(event.start, event.end)) {
+            const key = toLocalISODateString(day);
+            if (!eventIdsByDay[key] || !eventIdsByDay[key].includes(id))
+              continue;
+            const eventIds = eventIdsByDay[key].filter(
+              (eventId) => eventId !== id,
+            );
+            eventIdsByDay[key] = eventIds;
 
-      for (const day of getSpannedDays(event.start, event.end)) {
-        const key = toLocalISODateString(day);
-        if (!eventIdsByDay[key] || !eventIdsByDay[key].includes(id)) continue;
-        const eventIds = eventIdsByDay[key].filter((eventId) => eventId !== id);
-        eventIdsByDay[key] = eventIds;
+            if (!eventIdsByDay[key].length) {
+              delete eventIdsByDay[key];
+            }
+          }
 
-        if (!eventIdsByDay[key].length) {
-          delete eventIdsByDay[key];
-        }
-      }
+          for (const day of getSpannedDays(event.start, event.end)) {
+            const key = toLocalISODateString(day);
+            eventIdsByDay[key] = [...(eventIdsByDay[key] ?? []), event.id];
+          }
 
-      for (const day of getSpannedDays(event.start, event.end)) {
-        const key = toLocalISODateString(day);
-        eventIdsByDay[key] = [...(eventIdsByDay[key] ?? []), event.id];
-      }
-
-      return { _eventIdsByDay: eventIdsByDay, events };
-    });
-  },
-}));
+          return { _eventIdsByDay: eventIdsByDay, events };
+        });
+      },
+    }),
+    {
+      name: "calendar",
+    },
+  ),
+);

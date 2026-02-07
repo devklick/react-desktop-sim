@@ -26,8 +26,8 @@ function AppSideBar({
     s.secondaryColor,
   ]);
   return (
-    <StyledSideBar>
-      <StyledItemContainer>
+    <StyledSideBar className="app-side-bar">
+      <StyledItemContainer className="app-side-bar__item-container">
         {items.map((item) => (
           <Button
             padding={"6px 10px"}
@@ -42,6 +42,7 @@ function AppSideBar({
             key={item.title}
             separators={itemSeparators}
             separatorColor={itemSeparatorColor}
+            className="app-side-bar__item"
           >
             {item.title}
           </Button>

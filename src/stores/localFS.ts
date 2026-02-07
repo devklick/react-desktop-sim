@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
+import { idbStorageAdaptor } from "./idbStorageAdaptor";
 
 export type FSDirectory = {
   name: string;
@@ -127,6 +128,8 @@ export interface LocalFSState {
   addToFavorites: (path: string) => void;
   removeFromFavorites: (path: string) => void;
 }
+
+type PersistedLocalFSState = Omit<LocalFSState, "separator">;
 
 export const useLocalFS = create<LocalFSState>()(
   persist(
@@ -364,10 +367,11 @@ export const useLocalFS = create<LocalFSState>()(
     },
     {
       name: "local-fs",
-      partialize: (state) => {
-        const updated = { ...state } as Partial<LocalFSState>;
-        delete updated.separator;
-        return updated;
+      storage: createJSONStorage(() => idbStorageAdaptor),
+      partialize: (state): PersistedLocalFSState => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { separator: _sep, ...rest } = state;
+        return rest;
       },
     },
   ),

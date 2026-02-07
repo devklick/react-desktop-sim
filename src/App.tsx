@@ -4,13 +4,13 @@ import Desktop from "./components/Desktop";
 import useSystemSettings from "./stores/systemSettingsStore";
 
 function App() {
-  const settings = useSystemSettings();
+  const fontColor = useSystemSettings((s) => s.fontColor);
   return (
     <div className="App">
       <Global
         styles={css`
           body {
-            color: ${settings.fontColor};
+            color: ${fontColor};
           }
         `}
       />
