@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import Settings from "..";
-import Launcher from "../../../components/BottomBar/Launcher";
+import BorderedAppLauncher from "../../../components/BottomBar/Launcher";
 import { FileBrowserHandles } from "../../FileBrowser/FileBrowser";
 
 interface SettingsLauncherProps {}
@@ -9,7 +9,7 @@ interface SettingsLauncherProps {}
 function SettingsLauncher({}: SettingsLauncherProps) {
   const ref = useRef<FileBrowserHandles>(null);
   return (
-    <Launcher
+    <BorderedAppLauncher
       windowType={"settings"}
       WindowTitle="Settings"
       initialDimensions={{ height: 500, width: 500 }}
@@ -17,7 +17,7 @@ function SettingsLauncher({}: SettingsLauncherProps) {
       appContent={<Settings />}
       icon=""
       contentRef={ref}
-    ></Launcher>
+    ></BorderedAppLauncher>
   );
 }
 

@@ -1,3 +1,3 @@
-import Launcher from "./Launcher";
+import BorderedAppLauncher from "./BorderedAppLauncher";
 
-export default Launcher;
+export default BorderedAppLauncher;

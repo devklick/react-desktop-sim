@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import Launcher from "../../../components/BottomBar/Launcher";
+import BorderedAppLauncher from "../../../components/BottomBar/Launcher";
 import WebBrowser, { WebBrowserHandles } from "../WebBrowser";
 
 interface WebBrowserLauncherProps {}
@@ -10,7 +10,7 @@ const windowType = "web-browser";
 function WebBrowserLauncher({}: WebBrowserLauncherProps) {
   const ref = useRef<WebBrowserHandles>(null);
   return (
-    <Launcher
+    <BorderedAppLauncher
       windowType={windowType}
       WindowTitle="Web Browser"
       initialDimensions={{ height: 400, width: 400 }}

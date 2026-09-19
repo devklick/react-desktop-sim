@@ -4,12 +4,12 @@ import { v4 as uuid } from "uuid";
 import useConditionalClick from "../../../hooks/useConditionalClick";
 import useWindowManagerStore from "../../../stores/windowManagerStore";
 import BorderedApp from "../../BorderedApp";
-import { Dimensions, Position } from "../../../hooks/useDragToResize";
+import { Dimensions } from "../../../hooks/useDragToResize";
 import { MenuItemProps } from "../../MenuItems";
 
-import { StyledIcon, StyledLauncher } from "./styles";
-import ContextMenu from "../../ContextMenu";
 import { BorderedAppContentHandles } from "../../BorderedApp/BorderedApp";
+import LauncherView from "./LauncherView";
+
 interface LauncherProps<
   T extends BorderedAppContentHandles<E>,
   E extends HTMLElement = HTMLElement,
@@ -78,6 +78,7 @@ function Launcher<
     });
   }
   function onLeftClick() {
+    console.log("left click");
     // If there are one or more windows of this type open,
     // we want to focus them. This means revealing them if they
     // are minimized and bring them to the top of the window stack.
@@ -105,42 +106,30 @@ function Launcher<
     clickHandler: onRightClick,
   });
 
-  function getContextMenu() {
-    const items: Array<MenuItemProps> = [
-      {
-        title: "New Window",
-        action: () => {
-          addWindow();
-          setContextOpen(false);
-        },
+  const contextMenuItems: Array<MenuItemProps> = [
+    {
+      title: "New Window",
+      action: () => {
+        addWindow();
+        setContextOpen(false);
       },
-    ];
-    return (
-      <ContextMenu
-        close={() => setContextOpen(false)}
-        items={items}
-        position={getContextPosition(items.length)}
-      />
-    );
-  }
-  function getContextPosition(numberOfItems: number): Position {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return { x: 0, y: 0 };
-    return {
-      x: rect.x,
-      y: rect.y - 20 - numberOfItems * 30,
-    };
-  }
+    },
+  ];
   return (
     <>
-      {contextOpen && getContextMenu()}
-      <StyledLauncher ref={ref} tabIndex={1} className="launcher">
-        <StyledIcon
-          src={icon}
-          className="launcher-icon"
-          alt={windowType}
-        ></StyledIcon>
-      </StyledLauncher>
+      <LauncherView
+        icon={icon}
+        launcherRef={ref}
+        windowType={windowType}
+        contextMenu={
+          contextOpen
+            ? {
+                items: contextMenuItems,
+                close: () => setContextOpen(false),
+              }
+            : undefined
+        }
+      />
     </>
   );
 }

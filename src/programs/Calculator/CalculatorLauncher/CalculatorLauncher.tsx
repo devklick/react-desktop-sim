@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import Launcher from "../../../components/BottomBar/Launcher";
+import BorderedAppLauncher from "../../../components/BottomBar/Launcher";
 import Calculator, { CalculatorHandles } from "../Calculator";
 
 interface CalculatorLauncherProps {}
@@ -10,7 +10,7 @@ const windowType = "calculator";
 function CalculatorLauncher({}: CalculatorLauncherProps) {
   const ref = useRef<CalculatorHandles>(null);
   return (
-    <Launcher
+    <BorderedAppLauncher
       windowType={windowType}
       WindowTitle="Calculator"
       // TODO: Consider supoprting an `allowResize` prop, instead of having to repeat the initial dimensions for both min and max

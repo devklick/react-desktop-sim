@@ -1,6 +1,7 @@
 import CalculatorLauncher from "../../programs/Calculator/CalculatorLauncher";
 import CalendarLauncher from "../../programs/Calendar/CalendarLauncher/CalendarLauncher";
 import FileBrowserLauncher from "../../programs/FileBrowser/FileBrowserLauncher";
+import GithubLauncher from "../../programs/GithubLauncher";
 import SettingsLauncher from "../../programs/Settings/SettingsLauncher";
 import TextEditorLauncher from "../../programs/TextEditor/TextEditorLauncher";
 import WebBrowserLauncher from "../../programs/WebBrowser/WebBrowserLauncher";
@@ -28,6 +29,7 @@ function BottomBar({}: BottomBarProps) {
           <FileBrowserLauncher />
           <SettingsLauncher />
           <CalendarLauncher />
+          <GithubLauncher />
         </StyledContents>
       </StyledBottomBar>
     </StyledContainer>

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import FileBrowser from "..";
-import Launcher from "../../../components/BottomBar/Launcher";
+import BorderedAppLauncher from "../../../components/BottomBar/Launcher";
 import { FileBrowserHandles } from "../FileBrowser";
 
 interface FileBrowserLauncherProps {}
@@ -9,7 +9,7 @@ interface FileBrowserLauncherProps {}
 function FileBrowserLauncher({}: FileBrowserLauncherProps) {
   const ref = useRef<FileBrowserHandles>(null);
   return (
-    <Launcher
+    <BorderedAppLauncher
       windowType={"file-browser"}
       WindowTitle="File Browser"
       initialDimensions={{ height: 500, width: 500 }}

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import TextEditor from "..";
-import Launcher from "../../../components/BottomBar/Launcher";
+import BorderedAppLauncher from "../../../components/BottomBar/Launcher";
 import { MenuItemProps } from "../../../components/MenuItems";
 import icon from "./text-editor-launcher-icon.svg";
 import { TextEditorHandles } from "../TextEditor";
@@ -58,7 +58,7 @@ const menus: MenuItemProps[] = [
 function TextEditorLauncher({}: TextEditorLauncherProps) {
   const textEditorRef = useRef<TextEditorHandles>(null);
   return (
-    <Launcher
+    <BorderedAppLauncher
       windowType={windowType}
       WindowTitle="Text Editor"
       initialDimensions={{ height: 500, width: 500 }}
